@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogneco.Transpiler.Run", "Cogneco.Transpiler.Run\Cogneco.Transpiler.Run.csproj", "{2EAC74E9-0674-4E7C-BFEF-D1D8F53860EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogneco.Transpiler", "Cogneco.Transpiler\Cogneco.Transpiler.csproj", "{7335A11B-06C7-4F27-8079-1FD42B635D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kean", "Kean\Kean\Kean.csproj", "{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kean.Tests", "Kean\Kean.Tests\Kean.Tests.csproj", "{2678B75E-8DA1-45EB-8F0C-252048ACE936}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2678B75E-8DA1-45EB-8F0C-252048ACE936}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2678B75E-8DA1-45EB-8F0C-252048ACE936}.Debug|x86.Build.0 = Debug|Any CPU
+		{2678B75E-8DA1-45EB-8F0C-252048ACE936}.Release|x86.ActiveCfg = Release|Any CPU
+		{2678B75E-8DA1-45EB-8F0C-252048ACE936}.Release|x86.Build.0 = Release|Any CPU
+		{2EAC74E9-0674-4E7C-BFEF-D1D8F53860EC}.Debug|x86.ActiveCfg = Debug|x86
+		{2EAC74E9-0674-4E7C-BFEF-D1D8F53860EC}.Debug|x86.Build.0 = Debug|x86
+		{2EAC74E9-0674-4E7C-BFEF-D1D8F53860EC}.Release|x86.ActiveCfg = Release|x86
+		{2EAC74E9-0674-4E7C-BFEF-D1D8F53860EC}.Release|x86.Build.0 = Release|x86
+		{7335A11B-06C7-4F27-8079-1FD42B635D21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7335A11B-06C7-4F27-8079-1FD42B635D21}.Debug|x86.Build.0 = Debug|Any CPU
+		{7335A11B-06C7-4F27-8079-1FD42B635D21}.Release|x86.ActiveCfg = Release|Any CPU
+		{7335A11B-06C7-4F27-8079-1FD42B635D21}.Release|x86.Build.0 = Release|Any CPU
+		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Debug|x86.Build.0 = Debug|Any CPU
+		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Release|x86.ActiveCfg = Release|Any CPU
+		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Cogneco.Transpiler.Run\Cogneco.Transpiler.Run.csproj
+	EndGlobalSection
+EndGlobal

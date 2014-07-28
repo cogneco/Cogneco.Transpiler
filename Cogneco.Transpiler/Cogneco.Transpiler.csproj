@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7335A11B-06C7-4F27-8079-1FD42B635D21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Cogneco.Transpiler</RootNamespace>
+    <AssemblyName>Cogneco.Transpiler</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pom\Expression.cs" />
+    <Compile Include="Pom\FunctionExpression.cs" />
+    <Compile Include="Pom\ConstantExpression.cs" />
+    <Compile Include="Pom\VariableExpression.cs" />
+    <Compile Include="Pom\FunctionDefinition.cs" />
+    <Compile Include="Pom\Definition.cs" />
+    <Compile Include="Pom\ClassDefinition.cs" />
+    <Compile Include="Pom\Type\Expression.cs" />
+    <Compile Include="Pom\Type\Tuple.cs" />
+    <Compile Include="Pom\Type\Function.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Statement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Expression.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Declaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\LoopStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\BranchStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\LabeledStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ControlStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Statements.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ForStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ForInStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\WhileStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\DoWhileStatement.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ForInitialization.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\CodeBlock.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Type.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ArrayType.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\FunctionType.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\TypeIdentifier.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\TupleType.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\OptionalType.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ImportDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ConstantDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\VariableDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\FunctionDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\EnumDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\StructDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ClassDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\InterfaceDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\InitializerDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\DeinitializerDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\ExtensionDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\SubscriptDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\OperatorDeclaration.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Declarations.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Pom\" />
+    <Folder Include="FrontEnd\" />
+    <Folder Include="Pom\Type\" />
+    <Folder Include="Backend\" />
+    <Folder Include="Backend\C99\" />
+    <Folder Include="FrontEnd\Apus\" />
+    <Folder Include="FrontEnd\Apus\SyntaxTree\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kean\Kean\Kean.csproj">
+      <Project>{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}</Project>
+      <Name>Kean</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
