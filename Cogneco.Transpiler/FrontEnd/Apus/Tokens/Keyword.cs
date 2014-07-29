@@ -8,6 +8,7 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.Tokens
 		public readonly Keywords Name;
 		public Keyword(Keywords name, string raw, Uri.Region region) : base(raw, region)
 		{
+			this.Name = name;
 		}
 	}
 }

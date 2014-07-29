@@ -14,10 +14,10 @@ namespace Cogneco.Transpiler.Run
 			var argumentParser = new Argument.Parser();
 			argumentParser.UnassociatedParameterHandler = argument => program = argument;
 			argumentParser.Parse(arguments);
-			using (var lexer = FrontEnd.Apus.Tokens.Lexer.Open(IO.CharacterReader.Open(program)))
-				if (lexer.NotNull())
-					foreach (var token in lexer)
-						Console.Write(token + "|");
+			var parser = new FrontEnd.Apus.SyntaxTree.Parser();
+			var module = parser.Parse(program);
+			foreach (var declaration in module.Declarations)
+				Console.WriteLine(declaration);
 		}
 	}
 }

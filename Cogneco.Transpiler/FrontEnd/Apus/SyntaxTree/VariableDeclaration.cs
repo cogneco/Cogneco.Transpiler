@@ -30,6 +30,10 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		public VariableDeclaration()
 		{
 		}
+		public override string ToString()
+		{
+			return string.Format("[VariableDeclaration: Pattern={0}, Expression={1}]", Pattern, Expression);
+		}
 	}
 }
 

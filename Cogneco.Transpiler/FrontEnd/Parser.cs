@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 using Generic = System.Collections.Generic;
 using Uri = Kean.Uri;
 using IO = Kean.IO;
@@ -31,12 +32,13 @@ namespace Cogneco.Transpiler.FrontEnd
 		public TToken Current { get; private set; }
 		Generic.IEnumerator<TToken> tokens;
 		public TResult Result { get; private set; }
+		public bool Empty { get { return this.Current.IsNull(); } }
 		protected Parser()
 		{
 		}
-		public TToken Next()
+		public virtual TToken Next()
 		{
-			return this.tokens.MoveNext() ? this.tokens.Current : null;
+			return this.Current = (this.tokens.MoveNext() ? this.tokens.Current : null);
 		}
 		public TResult Parse(Uri.Locator resource)
 		{
@@ -56,16 +58,13 @@ namespace Cogneco.Transpiler.FrontEnd
 		protected abstract Generic.IEnumerable<TToken> OpenLexer(IO.ICharacterReader reader);
 		public TResult Parse(Generic.IEnumerable<TToken> tokens)
 		{
-			var enumerator = tokens.GetEnumerator();
-			TResult result = null;
-			if (enumerator.MoveNext())
-				result = this.Parse(enumerator);
-			return result;
+			return this.Parse(tokens.GetEnumerator());
 		}
 		public TResult Parse(Generic.IEnumerator<TToken> tokens)
 		{
 			this.tokens = tokens;
 			this.Result = new TResult();
+			this.Next();
 			this.Parse();
 			return this.Result;
 		}

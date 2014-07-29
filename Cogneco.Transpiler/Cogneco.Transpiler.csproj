@@ -87,6 +87,7 @@
     <Compile Include="FrontEnd\Apus\SyntaxTree\Associativity.cs" />
     <Compile Include="FrontEnd\Apus\SyntaxTree\Parser.cs" />
     <Compile Include="FrontEnd\Parser.cs" />
+    <Compile Include="Exception\SyntaxError.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

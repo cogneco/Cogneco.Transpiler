@@ -32,6 +32,10 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 			this.Name = identifier.Name;
 			this.Region = identifier.Region;
 		}
+		public override string ToString()
+		{
+			return string.Format("[IdentifierPattern: Name={0}]", Name);
+		}
 	}
 }
 

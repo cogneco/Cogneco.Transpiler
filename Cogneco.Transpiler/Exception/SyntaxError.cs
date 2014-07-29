@@ -1,5 +1,5 @@
 ﻿//
-//  Literal.cs
+//  SyntaxError.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,27 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Error = Kean.Error;
+using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
+namespace Cogneco.Transpiler.Exception
 {
-	public abstract class Literal : Expression
+	public class SyntaxError : Exception
 	{
-		public override int Precedence { get { return int.MaxValue; } }
-		public string Raw { get; set; }
-		protected Literal(Tokens.Literal token)
+		public string Expected { get; private set; }
+		public string Found { get; private set; }
+		public Uri.Region Region { get; private set; }
+		internal SyntaxError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
-			this.Raw = token.Raw;
-			this.Region = token.Region;
 		}
-		#region Static Create
-		public static Literal Create(Tokens.Literal token)
+		internal SyntaxError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Syntax Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
 		{
-			return 
-				token is Tokens.IntegerLiteral ? (Literal)new IntegerLiteral(token as Tokens.IntegerLiteral) :
-				token is Tokens.FloatingPointLiteral ? (Literal)new FloatingPointLiteral(token as Tokens.FloatingPointLiteral) :
-				null;
+			this.Expected = expected;
+			this.Found = found;
+			this.Region = region;
 		}
-		#endregion
 	}
 }
 

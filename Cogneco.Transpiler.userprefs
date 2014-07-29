@@ -1,10 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Lexer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IntegerLiteral.cs">
     <Files>
-      <File FileName="Cogneco.Transpiler/Exception/LexicalError.cs" Line="1" Column="1" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Token.cs" Line="19" Column="4" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Lexer.cs" Line="71" Column="8" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Parser.cs" Line="100" Column="61" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Literal.cs" Line="41" Column="10" />
+      <File FileName="Cogneco.Transpiler.Run/Program.cs" Line="20" Column="36" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/VariableDeclaration.cs" Line="35" Column="100" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IdentifierPattern.cs" Line="38" Column="4" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IntegerLiteral.cs" Line="36" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
