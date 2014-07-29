@@ -13,7 +13,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -22,7 +22,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -42,40 +42,51 @@
     <Compile Include="Pom\Type\Expression.cs" />
     <Compile Include="Pom\Type\Tuple.cs" />
     <Compile Include="Pom\Type\Function.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Statement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Expression.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Token.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Keyword.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Identifier.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Keywords.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Literal.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\IntegerLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\FloatingPointLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\StringLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Operator.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\BinaryOperator.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\PrefixOperator.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\PostfixOperator.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\BooleanLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\NullLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Lexer.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\WhiteSpace.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Comment.cs" />
+    <Compile Include="Exception\Exception.cs" />
+    <Compile Include="Exception\LexicalError.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Separator.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\LeftParenthesis.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\RightParenthesis.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\LeftBracket.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\RightBracket.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\LeftBrace.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\RightBrace.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Comma.cs" />
+    <Compile Include="FrontEnd\Apus\Tokens\Semicolon.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Module.cs" />
     <Compile Include="FrontEnd\Apus\SyntaxTree\Declaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\LoopStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\BranchStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\LabeledStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ControlStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Statements.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ForStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ForInStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\WhileStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\DoWhileStatement.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ForInitialization.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\CodeBlock.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Type.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ArrayType.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\FunctionType.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\TypeIdentifier.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\TupleType.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\OptionalType.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ImportDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ConstantDeclaration.cs" />
     <Compile Include="FrontEnd\Apus\SyntaxTree\VariableDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\FunctionDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\EnumDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\StructDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ClassDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\InterfaceDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\InitializerDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\DeinitializerDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\ExtensionDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\SubscriptDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\OperatorDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Declarations.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\IdentifierPattern.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Pattern.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Node.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Expression.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Type.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\TupleExpression.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\IntegerLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Literal.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\FloatingPointLiteral.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Operator.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\BinaryOperator.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Associativity.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Parser.cs" />
+    <Compile Include="FrontEnd\Parser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,6 +97,8 @@
     <Folder Include="Backend\C99\" />
     <Folder Include="FrontEnd\Apus\" />
     <Folder Include="FrontEnd\Apus\SyntaxTree\" />
+    <Folder Include="FrontEnd\Apus\Tokens\" />
+    <Folder Include="Exception\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kean\Kean\Kean.csproj">

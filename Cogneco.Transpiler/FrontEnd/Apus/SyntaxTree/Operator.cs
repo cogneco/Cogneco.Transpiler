@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Operator.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -23,12 +23,10 @@ using System;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public abstract class Operator : Expression
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public abstract string Symbol { get; }
+		protected Operator()
 		{
 		}
 	}

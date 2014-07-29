@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  IdentifierPattern.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,16 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Security;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public class IdentifierPattern : Pattern
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public string Name { get; set; }
+		public IdentifierPattern(Tokens.Identifier identifier)
 		{
+			this.Name = identifier.Name;
+			this.Region = identifier.Region;
 		}
 	}
 }

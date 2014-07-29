@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/Pom/Expression.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Lexer.cs">
     <Files>
-      <File FileName="Kean/Kean/Json/Sax/Tokenizer.cs" Line="37" Column="23" />
-      <File FileName="Cogneco.Transpiler/Pom/Expression.cs" Line="7" Column="10" />
-      <File FileName="Cogneco.Transpiler/Pom/TypeExpression.cs" Line="1" Column="1" />
+      <File FileName="Cogneco.Transpiler/Exception/LexicalError.cs" Line="1" Column="1" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Token.cs" Line="19" Column="4" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/Tokens/Lexer.cs" Line="71" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

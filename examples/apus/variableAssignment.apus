@@ -1,0 +1,2 @@
+var alpha = 1
+var beta = 5 * (2 + alpha)

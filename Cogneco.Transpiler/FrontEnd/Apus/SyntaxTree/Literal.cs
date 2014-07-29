@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Literal.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -23,13 +23,14 @@ using System;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public abstract class Literal : Expression
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public override int Precedence { get { return int.MaxValue; } }
+		public string Raw { get; set; }
+		protected Literal(Tokens.Literal token)
 		{
+			this.Raw = token.Raw;
+			this.Region = token.Region;
 		}
 	}
 }

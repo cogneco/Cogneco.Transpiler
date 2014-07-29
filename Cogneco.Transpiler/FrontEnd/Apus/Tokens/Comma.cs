@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Comma.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,15 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
+namespace Cogneco.Transpiler.FrontEnd.Apus.Tokens
 {
-	public abstract class Expression : Node
+	public class Comma : Separator
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public Comma(Uri.Region region) : base(",", region)
 		{
 		}
 	}

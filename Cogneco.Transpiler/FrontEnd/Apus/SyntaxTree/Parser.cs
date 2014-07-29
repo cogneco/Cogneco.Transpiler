@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Parser.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,16 +20,44 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Generic = System.Collections.Generic;
+using Uri = Kean.Uri;
+using IO = Kean.IO;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public class Parser : FrontEnd.Parser<Tokens.Token, Module>
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public Parser()
 		{
+		}
+		protected override Generic.IEnumerable<Tokens.Token> OpenLexer(IO.ICharacterReader reader)
+		{
+			return Tokens.Lexer.Open(reader);
+		}
+		protected override void Parse()
+		{
+			if (this.Current is Tokens.Keyword)
+			{
+				switch ((this.Current as Tokens.Keyword).Name)
+				{
+					case Tokens.Keywords.Var:
+						var result = new VariableDeclaration() { Region = this.Current.Region };
+
+						result.Pattern = this.ParsePattern();
+						this.Next();
+						result.Expression = this.ParseExpression();
+						break;
+				}
+			}
+		}
+		protected Pattern ParsePattern()
+		{
+			return null;
+		}
+		protected Expression ParseExpression()
+		{
+			return null;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Module.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,15 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Collection = Kean.Collection;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public class Module : Node
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		readonly Collection.IList<Declaration> declarations = new Collection.List<Declaration>();
+		public Collection.IList<Declaration> Declarations { get { return this.declarations; } }
+		public Module()
 		{
 		}
 	}

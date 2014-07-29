@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Node.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,15 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Uri = Kean.Uri;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public abstract class Node
 	{
-		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
-		protected Expression()
+		public Uri.Region Region { get; set; }
+		protected Node()
 		{
 		}
 	}

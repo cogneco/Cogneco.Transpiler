@@ -1,5 +1,5 @@
 ﻿//
-//  Expression.cs
+//  Pattern.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -23,12 +23,11 @@ using System;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public abstract class Pattern : Node
 	{
-		public abstract int Precedence { get; }
 		public Type AssignedType { get; set; }
 		public Type InferredType { get; set; }
-		protected Expression()
+		protected Pattern()
 		{
 		}
 	}
