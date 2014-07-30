@@ -90,6 +90,7 @@
     <Compile Include="Exception\SyntaxError.cs" />
     <Compile Include="FrontEnd\Apus\SyntaxTree\Identifier.cs" />
     <Compile Include="FrontEnd\Apus\SyntaxTree\TypeIdentifier.cs" />
+    <Compile Include="FrontEnd\Apus\SyntaxTree\Statement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -51,8 +51,11 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 				{
 					switch ((this.Current as Tokens.Keyword).Name)
 					{
+						case Tokens.Keywords.Let:
+							Console.WriteLine(this.ParseVariableDeclaration(true));
+							break;
 						case Tokens.Keywords.Var:
-							Console.WriteLine(this.ParseVariableDeclaration());
+							Console.WriteLine(this.ParseVariableDeclaration(false));
 							break;
 						default:
 							this.Next();
@@ -62,9 +65,9 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 				else
 					this.Next();
 		}
-		protected VariableDeclaration ParseVariableDeclaration()
+		protected VariableDeclaration ParseVariableDeclaration(bool constant)
 		{
-			var result = new VariableDeclaration() { Region = this.Current.Region };
+			var result = new VariableDeclaration(constant) { Region = this.Current.Region };
 			this.Next();
 			result.Pattern = this.ParsePattern();
 			if (!this.Current.Is<Tokens.BinaryOperator>(t => t.Name == "="))

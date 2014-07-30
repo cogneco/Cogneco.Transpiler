@@ -24,7 +24,7 @@ using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Expression : Node
+	public abstract class Expression : Statement
 	{
 		public abstract int Precedence { get; }
 		public Type AssignedType { get; set; }

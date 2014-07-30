@@ -1,0 +1,9 @@
+let alpha = 1
+let beta = 1 + 2
+let gamma = 1 - 2 + 3
+let delta = 1 - 2 * 3
+let epsilon = 1 - (2 + 3)
+let zeta = 1 + alpha * beta
+let eta: Float = 1 + 2
+let theta = 1 - 2: Int * 3
+let iota = 1 - (2 + 3): Double

@@ -27,12 +27,15 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 	{
 		public Pattern Pattern { get; set; }
 		public Expression Expression { get; set; }
-		public VariableDeclaration()
+		readonly bool constant;
+		public bool Constant { get { return this.constant; } }
+		public VariableDeclaration(bool constant)
 		{
+			this.constant = constant;
 		}
 		public override string ToString()
 		{
-			return string.Format("var {0} = {1}", this.Pattern, this.Expression);
+			return string.Format("{0} {1} = {2}", this.Constant ? "let" : "var", this.Pattern, this.Expression);
 		}
 	}
 }

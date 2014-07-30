@@ -1,5 +1,5 @@
 ﻿//
-//  Declaration.cs
+//  Statement.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -23,9 +23,9 @@ using System;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public class Declaration : Statement
+	public abstract class Statement : Node
 	{
-		public Declaration()
+		protected Statement()
 		{
 		}
 	}
