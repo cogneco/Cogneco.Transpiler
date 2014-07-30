@@ -35,6 +35,26 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		{
 			return this.AssignedType.NotNull() ? ": " + this.AssignedType : "";
 		}
+		#region Static Parse
+		internal static Pattern ParsePattern(Parser parser)
+		{
+			Pattern result;
+			if (parser.Current is Tokens.Identifier)
+				result = new IdentifierPattern(parser.Current as Tokens.Identifier);
+			//			else if (this.Current is Tokens.LeftParenthesis)
+			//			{
+			//				// FIXME: Parse TuplePattern
+			//			}
+			else
+			{
+				new Exception.SyntaxError("Identifier, Tuple Pattern or Wildcard", parser.Current.Raw, parser.Current.Region).Throw();
+				result = null;
+			}
+			if (parser.Next().Is<Tokens.PostfixOperator>(t => t.Name == ":"))
+				result.AssignedType = Type.ParseType(parser);
+			return result;
+		}
+		#endregion
 	}
 }
 

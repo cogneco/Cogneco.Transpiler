@@ -19,8 +19,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using Kean.Extension;
+using Generic = System.Collections.Generic;
+using Uri = Kean.Uri;
+using IO = Kean.IO;
+using Collection = Kean.Collection;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -48,6 +51,51 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 			return this.AssignedType.NotNull() ? ": " + this.AssignedType : "";
 		}
 		protected abstract string ToStringHelper();
+		#region Static Parse
+		internal static Expression ParseExpression(Parser parser)
+		{
+			return Expression.ParseExpression(parser, 0, new Collection.Stack<Expression>());
+		}
+		internal static Expression ParseExpression(Parser parser, int precedence, Collection.IStack<Expression> stack)
+		{
+			Expression result = null;
+			Tokens.Token current = parser.Current;
+			if (current is Tokens.Literal)
+			{
+				result = Literal.Create(current as Tokens.Literal);
+				parser.Next();
+			}
+			else if (current is Tokens.Identifier)
+				result = Identifier.ParseIdentifier(parser);
+			else if (current is Tokens.BinaryOperator)
+			{
+				BinaryOperator o = BinaryOperator.Create(current as Tokens.BinaryOperator);
+				if (o.NotNull() && precedence < o.Precedence)
+				{
+					if ((o.Left = stack.Pop()).IsNull())
+						new Exception.SyntaxError("left hand expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
+					if (parser.Next().IsNull() || (o.Right = Expression.ParseExpression(parser, o.Associativity == Associativity.Right ? o.Precedence + 1 : o.Precedence, stack)).IsNull())
+						new Exception.SyntaxError("right expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
+					result = o;
+				}
+			}
+			else if (current is Tokens.LeftParenthesis)
+			{
+				if (parser.Next().IsNull() || (result = Expression.ParseExpression(parser)).IsNull())
+					new Exception.SyntaxError("matching end parenthesis", "nothing", current.Region).Throw();
+				if (!(parser.Current is Tokens.RightParenthesis))
+					new Exception.SyntaxError("matching end parenthesis", "\"" + parser.Current.Raw + "\"", parser.Current.Region).Throw();
+				parser.Next();
+			}
+			if (result.NotNull())
+			{
+				result = Expression.ParseExpression(parser, precedence, stack.Push(result)) ?? stack.Pop();
+				if (parser.Current.Is<Tokens.PostfixOperator>(t => t.Name == ":"))
+					result.AssignedType = Type.ParseType(parser);
+			}
+			return result;
+		}
+		#endregion
 	}
 }
 

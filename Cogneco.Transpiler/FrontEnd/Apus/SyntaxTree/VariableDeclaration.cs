@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -37,6 +38,19 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		{
 			return string.Format("{0} {1} = {2}", this.Constant ? "let" : "var", this.Pattern, this.Expression);
 		}
+		#region Static Parse
+		internal static VariableDeclaration ParseVariableDeclaration(Parser parser, bool constant)
+		{
+			var result = new VariableDeclaration(constant) { Region = parser.Current.Region };
+			parser.Next();
+			result.Pattern = Pattern.ParsePattern(parser);
+			if (!parser.Current.Is<Tokens.BinaryOperator>(t => t.Name == "="))
+				new Exception.SyntaxError("binary operator \"=\"", parser.Current.Raw, parser.Current.Region).Throw();
+			parser.Next();
+			result.Expression = Expression.ParseExpression(parser);
+			return result;
+		}
+		#endregion
 	}
 }
 

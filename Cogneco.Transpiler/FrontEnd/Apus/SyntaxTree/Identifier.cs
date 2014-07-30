@@ -38,6 +38,21 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		{
 			return this.Name;
 		}
+		#region Static Parse
+		internal static Identifier ParseIdentifier(Parser parser)
+		{
+			Tokens.Identifier current = parser.Current as Tokens.Identifier;
+			parser.Next();
+			Identifier result = null;
+			if (parser.Current is Tokens.LeftParenthesis)
+				;// function call do ParseTupleExpression
+			else if (parser.Current is Tokens.BinaryOperator && (parser.Current as Tokens.BinaryOperator).Name == ".")
+				;// parent resolve this with recursivecall
+			else
+				result = new Identifier(current.Name) { Region = current.Region };
+			return result;
+		}
+		#endregion
 	}
 }
 

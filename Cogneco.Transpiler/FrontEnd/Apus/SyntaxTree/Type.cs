@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -28,6 +29,21 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		protected Type()
 		{
 		}
+		#region Static Parse
+		internal static Type ParseType(Parser parser)
+		{
+			var current = parser.Current as Tokens.PostfixOperator;
+			if (parser.Next().IsNull())
+				new Exception.SyntaxError("type expression following postfix \":\"", "nothing", current.Region);
+			Type result = null;
+			if (parser.Current is Tokens.Identifier)
+			{
+				result = new TypeIdentifier((parser.Current as Tokens.Identifier).Name) { Region = parser.Current.Region };
+				parser.Next();
+			}
+			return result;
+		}
+		#endregion
 	}
 }
 
