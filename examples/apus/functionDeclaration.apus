@@ -1,0 +1,14 @@
+func alpha() = 1 + 2
+func beta(alef) = 1 + alef
+func gamma() { 1 - 2 + 3 }
+func delta(alef) { 1 - alef * 3 }
+func epsilon() {
+	1 - (2 + 3)
+}
+func zeta(alef, bet) = 1 + alpha * beta
+func eta(alef: Int, bet: Float) = 1 + 2
+func theta(alef) -> Float = 1 - alef: Int * 3
+func iota(alef, bet) : (Int, Float) -> Float = 1 - (2 + 3)
+func kappa(alef, bet) : (Int, Float) -> Float {
+ 1 - (2 + 3)
+}
