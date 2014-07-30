@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -31,6 +32,22 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		protected Expression()
 		{
 		}
+		public string ToString(int precedence)
+		{
+			string result = this.ToStringHelper();
+			if (precedence > this.Precedence)
+				result = "(" + result + ")";
+			return result + this.TypeString();
+		}
+		public sealed override string ToString()
+		{
+			return this.ToStringHelper() + this.TypeString();
+		}
+		string TypeString()
+		{
+			return this.AssignedType.NotNull() ? ": " + this.AssignedType : "";
+		}
+		protected abstract string ToStringHelper();
 	}
 }
 

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -29,6 +30,10 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		public FloatingPointLiteral(Tokens.FloatingPointLiteral token) : base(token)
 		{
 			this.Value = token.Value;
+		}
+		protected override string ToStringHelper()
+		{
+			return this.Value.AsString();
 		}
 	}
 }

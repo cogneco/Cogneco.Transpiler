@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
@@ -39,7 +40,30 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 			this.precedence = precedence;
 			this.associativity = associativity;
 		}
+		protected override string ToStringHelper()
+		{
+			var leftPrecedence = this.Precedence; 
+			var rightPrecedence = this.Precedence;
+			switch (this.Associativity)
+			{
+				case Associativity.Left:
+					rightPrecedence++;
+					break;
+				case Associativity.Right:
+					leftPrecedence++;
+					break;
+			}
+			//leftPrecedence = rightPrecedence = int.MaxValue;
+			return string.Format(this.Precedence > 200 ? "{1}{0}{2}" : "{1} {0} {2}", this.Symbol, this.Left.ToString(leftPrecedence), this.Right.ToString(rightPrecedence));
+		}
 		#region Static Create
+		public static BinaryOperator Create(Tokens.BinaryOperator token)
+		{
+			BinaryOperator result = BinaryOperator.Create(token.Name);
+			if (result.NotNull())
+				result.Region = token.Region;
+			return result;
+		}
 		public static BinaryOperator Create(string symbol)
 		{
 			BinaryOperator result;
@@ -47,6 +71,10 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 			{
 				default:
 					result = null;
+					break;
+			// Resolving
+				case ".":
+					result = new BinaryOperator(symbol, 300, Associativity.None);
 					break;
 			// Exponentive
 				case "<<":

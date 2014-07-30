@@ -1,5 +1,5 @@
 ﻿//
-//  Literal.cs
+//  TypeIdentifier.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -23,24 +23,18 @@ using System;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public abstract class Literal : Expression
+	public class TypeIdentifier : Type
 	{
-		public override int Precedence { get { return 500; } }
-		public string Raw { get; set; }
-		protected Literal(Tokens.Literal token)
+		readonly string name;
+		public string Name { get { return this.name; } }
+		public TypeIdentifier(string name)
 		{
-			this.Raw = token.Raw;
-			this.Region = token.Region;
+			this.name = name;
 		}
-		#region Static Create
-		public static Literal Create(Tokens.Literal token)
+		public override string ToString()
 		{
-			return 
-				token is Tokens.IntegerLiteral ? (Literal)new IntegerLiteral(token as Tokens.IntegerLiteral) :
-				token is Tokens.FloatingPointLiteral ? (Literal)new FloatingPointLiteral(token as Tokens.FloatingPointLiteral) :
-				null;
+			return this.Name;
 		}
-		#endregion
 	}
 }
 
