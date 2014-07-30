@@ -28,7 +28,7 @@ using Collection = Kean.Collection;
 
 namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 {
-	public class Parser : FrontEnd.Parser<Tokens.Token, Module>
+	public class Parser : FrontEnd.Parser<Tokens.Token, Statement>
 	{
 		public Parser()
 		{
@@ -44,7 +44,7 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		{
 			return Tokens.Lexer.Open(reader);
 		}
-		protected override void Parse()
+		protected override Generic.IEnumerable<Statement> Parse()
 		{
 			while (!this.Empty)
 				if (this.Current is Tokens.Keyword)
@@ -52,10 +52,10 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 					switch ((this.Current as Tokens.Keyword).Name)
 					{
 						case Tokens.Keywords.Let:
-							Console.WriteLine(this.ParseVariableDeclaration(true));
+							yield return this.ParseVariableDeclaration(true);
 							break;
 						case Tokens.Keywords.Var:
-							Console.WriteLine(this.ParseVariableDeclaration(false));
+							yield return this.ParseVariableDeclaration(false);
 							break;
 						default:
 							this.Next();

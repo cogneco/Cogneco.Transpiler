@@ -15,9 +15,8 @@ namespace Cogneco.Transpiler.Run
 			argumentParser.UnassociatedParameterHandler = argument => program = argument;
 			argumentParser.Parse(arguments);
 			var parser = new FrontEnd.Apus.SyntaxTree.Parser();
-			var module = parser.Parse(program);
-			foreach (var declaration in module.Declarations)
-				Console.WriteLine(declaration);
+			foreach (var statement in parser.Parse(program))
+				Console.WriteLine(statement);
 		}
 	}
 }

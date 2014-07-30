@@ -27,11 +27,10 @@ using IO = Kean.IO;
 
 namespace Cogneco.Transpiler.FrontEnd
 {
-	public abstract class Parser<TToken, TResult> where TToken : class where TResult : class, new()
+	public abstract class Parser<TToken, TResult> where TToken : class
 	{
 		public TToken Current { get; private set; }
 		Generic.IEnumerator<TToken> tokens;
-		public TResult Result { get; private set; }
 		public bool Empty { get { return this.Current.IsNull(); } }
 		protected Parser()
 		{
@@ -40,35 +39,32 @@ namespace Cogneco.Transpiler.FrontEnd
 		{
 			return this.Current = (this.tokens.MoveNext() ? this.tokens.Current : null);
 		}
-		public TResult Parse(Uri.Locator resource)
+		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
 		{
-			TResult result;
 			var lexer = this.OpenLexer(IO.CharacterReader.Open(resource));
 			try
 			{
-				result = this.Parse(lexer);
+				foreach (var result in this.Parse(lexer))
+					yield return result;
 			}
 			finally
 			{
 				if (lexer is IDisposable)
 					(lexer as IDisposable).Dispose();
 			}
-			return result;
 		}
 		protected abstract Generic.IEnumerable<TToken> OpenLexer(IO.ICharacterReader reader);
-		public TResult Parse(Generic.IEnumerable<TToken> tokens)
+		public Generic.IEnumerable<TResult> Parse(Generic.IEnumerable<TToken> tokens)
 		{
 			return this.Parse(tokens.GetEnumerator());
 		}
-		public TResult Parse(Generic.IEnumerator<TToken> tokens)
+		public Generic.IEnumerable<TResult> Parse(Generic.IEnumerator<TToken> tokens)
 		{
 			this.tokens = tokens;
-			this.Result = new TResult();
 			this.Next();
-			this.Parse();
-			return this.Result;
+			return this.Parse();
 		}
-		protected abstract void Parse();
+		protected abstract Generic.IEnumerable<TResult> Parse();
 	}
 }
 
