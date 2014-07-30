@@ -30,9 +30,9 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		{
 			this.Value = token.Value;
 		}
-		public override string ToString()
+		protected override string ToStringHelper()
 		{
-			return string.Format("[IntegerLiteral: Value={0}]", Value);
+			return this.Value.ToString();
 		}
 	}
 }

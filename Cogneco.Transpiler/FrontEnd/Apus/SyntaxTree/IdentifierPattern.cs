@@ -34,7 +34,7 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		}
 		public override string ToString()
 		{
-			return string.Format("[IdentifierPattern: Name={0}]", Name);
+			return this.Name + this.TypeString();
 		}
 	}
 }

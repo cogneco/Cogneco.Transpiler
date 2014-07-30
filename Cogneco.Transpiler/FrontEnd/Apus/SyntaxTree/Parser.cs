@@ -46,16 +46,21 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		}
 		protected override void Parse()
 		{
-			//while (!this.Empty)
-			if (this.Current is Tokens.Keyword)
-			{
-				switch ((this.Current as Tokens.Keyword).Name)
+			while (!this.Empty)
+				if (this.Current is Tokens.Keyword)
 				{
-					case Tokens.Keywords.Var:
-						this.Result.Declarations.Add(this.ParseVariableDeclaration());
-						break;
+					switch ((this.Current as Tokens.Keyword).Name)
+					{
+						case Tokens.Keywords.Var:
+							Console.WriteLine(this.ParseVariableDeclaration());
+							break;
+						default:
+							this.Next();
+							break;
+					}
 				}
-			}
+				else
+					this.Next();
 		}
 		protected VariableDeclaration ParseVariableDeclaration()
 		{
@@ -88,7 +93,16 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		}
 		protected Type ParseType()
 		{
-			return null;
+			var current = this.Current as Tokens.PostfixOperator;
+			if (this.Next().IsNull())
+				new Exception.SyntaxError("type expression following postfix \":\"", "nothing", current.Region);
+			Type result = null;
+			if (this.Current is Tokens.Identifier)
+			{
+				result = new TypeIdentifier((this.Current as Tokens.Identifier).Name) { Region = this.Current.Region };
+				this.Next();
+			}
+			return result;
 		}
 		protected Expression ParseExpression()
 		{
@@ -97,27 +111,53 @@ namespace Cogneco.Transpiler.FrontEnd.Apus.SyntaxTree
 		protected Expression ParseExpression(int precedence, Collection.IStack<Expression> stack)
 		{
 			Expression result = null;
-			if (this.Current is Tokens.Literal)
-				result = Literal.Create(this.Current as Tokens.Literal);
-//			else if (this.Current is Tokens.Identifier)
-//				result =
-			else if (this.Current is Tokens.BinaryOperator)
+			Tokens.Token current = this.Current;
+			if (current is Tokens.Literal)
 			{
-				BinaryOperator o = BinaryOperator.Create((this.Current as Tokens.BinaryOperator).Name);
-				if (o.NotNull() && precedence > o.Precedence)
+				result = Literal.Create(current as Tokens.Literal);
+				this.Next();
+			}
+			else if (current is Tokens.Identifier)
+				result = ParseIdentifier();
+			else if (current is Tokens.BinaryOperator)
+			{
+				BinaryOperator o = BinaryOperator.Create(current as Tokens.BinaryOperator);
+				if (o.NotNull() && precedence < o.Precedence)
 				{
-					o.Left = stack.Pop();
-					o.Right = this.ParseExpression(o.Associativity == Associativity.Right ? o.Precedence + 1 : o.Precedence, stack);
+					if ((o.Left = stack.Pop()).IsNull())
+						new Exception.SyntaxError("left hand expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
+					if (this.Next().IsNull() || (o.Right = this.ParseExpression(o.Associativity == Associativity.Right ? o.Precedence + 1 : o.Precedence, stack)).IsNull())
+						new Exception.SyntaxError("right expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
 					result = o;
 				}
 			}
+			else if (current is Tokens.LeftParenthesis)
+			{
+				if (this.Next().IsNull() || (result = this.ParseExpression()).IsNull())
+					new Exception.SyntaxError("matching end parenthesis", "nothing", current.Region).Throw();
+				if (!(this.Current is Tokens.RightParenthesis))
+					new Exception.SyntaxError("matching end parenthesis", "\"" + this.Current.Raw + "\"", this.Current.Region).Throw();
+				this.Next();
+			}
 			if (result.NotNull())
 			{
-				this.Next();
-				result = ParseExpression(result.Precedence, stack.Push(result)) ?? stack.Pop();
+				result = this.ParseExpression(precedence, stack.Push(result)) ?? stack.Pop();
 				if (this.Current.Is<Tokens.PostfixOperator>(t => t.Name == ":"))
 					result.AssignedType = this.ParseType();
 			}
+			return result;
+		}
+		protected Identifier ParseIdentifier()
+		{
+			Tokens.Identifier current = this.Current as Tokens.Identifier;
+			this.Next();
+			Identifier result = null;
+			if (this.Current is Tokens.LeftParenthesis)
+				;// function call do ParseTupleExpression
+			else if (this.Current is Tokens.BinaryOperator && (this.Current as Tokens.BinaryOperator).Name == ".")
+				;// parent resolve this with recursivecall
+			else
+				result = new Identifier(current.Name) { Region = current.Region };
 			return result;
 		}
 	}

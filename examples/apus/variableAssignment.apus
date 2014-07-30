@@ -1,2 +1,6 @@
 var alpha = 1
-var beta = 5 * (2 + alpha)
+var beta: Float = 1 + 2
+var gamma = 1 - 2 + 3
+var delta = 1 - 2: Int * 3
+var epsilon = 1 - (2 + 3): Double
+var zeta = 1 + alpha * beta

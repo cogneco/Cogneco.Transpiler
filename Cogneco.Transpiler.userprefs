@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IntegerLiteral.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Cogneco.Transpiler/FrontEnd/Parser.cs">
     <Files>
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Parser.cs" Line="100" Column="61" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Literal.cs" Line="41" Column="10" />
-      <File FileName="Cogneco.Transpiler.Run/Program.cs" Line="20" Column="36" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/VariableDeclaration.cs" Line="35" Column="100" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IdentifierPattern.cs" Line="38" Column="4" />
-      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IntegerLiteral.cs" Line="36" Column="4" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Parser.cs" Line="56" Column="4" />
+      <File FileName="Kean/Kean/Math/Algebra/Parser.cs" Line="52" Column="44" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Module.cs" Line="33" Column="4" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/TupleExpression.cs" Line="27" Column="30" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/IntegerLiteral.cs" Line="27" Column="3" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Apus/SyntaxTree/Literal.cs" Line="30" Column="9" />
+      <File FileName="Cogneco.Transpiler/FrontEnd/Parser.cs" Line="50" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
