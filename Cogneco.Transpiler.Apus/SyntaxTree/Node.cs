@@ -21,6 +21,7 @@
 
 using System;
 using Uri = Kean.Uri;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -30,6 +31,7 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		protected Node()
 		{
 		}
+		//internal abstract bool Write(Text.Indenter indenter);
 	}
 }
 

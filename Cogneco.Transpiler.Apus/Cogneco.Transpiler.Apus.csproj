@@ -83,6 +83,8 @@
     <Compile Include="Tokens\WhiteSpace.cs" />
     <Compile Include="Exception\LexicalError.cs" />
     <Compile Include="Exception\SyntaxError.cs" />
+    <Compile Include="SyntaxTree\StructureDeclaration.cs" />
+    <Compile Include="SyntaxTree\ClassDeclaration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

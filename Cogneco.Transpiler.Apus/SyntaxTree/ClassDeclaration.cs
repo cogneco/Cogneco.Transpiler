@@ -1,5 +1,5 @@
 ﻿//
-//  FunctionDeclaration.cs
+//  ClassDeclaration.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -27,35 +27,27 @@ using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class FunctionDeclaration : Declaration
+	public class ClassDeclaration : Declaration
 	{
 		public IdentifierPattern Name { get; private set; }
-		public TuplePattern Arguments { get; private set; }
-		public Type ReturnType { get; private set; }
 		public Collection.IReadOnlyVector<Statement> Statements { get; private set; }
-		public FunctionDeclaration()
+		public ClassDeclaration()
 		{
 		}
 		public override string ToString()
 		{
-			Text.Builder result = "func ";
+			Text.Builder result = "class ";
 			result += this.Name;
-			result += this.Arguments;
-			if (this.ReturnType.NotNull())
-				result += " -> " + this.ReturnType;
 			result += " { " + this.Statements.Map(s => s.ToString()).Join("; ") + " }";
 			return result;
 		}
 		#region Static Parse
-		internal static FunctionDeclaration ParseFunctionDeclaration(Tokens.Lexer lexer)
+		public static ClassDeclaration ParseClassDeclaration(Tokens.Lexer lexer)
 		{
-			var result = new FunctionDeclaration() { Region = lexer.Current.Region };
+			var result = new ClassDeclaration() { Region = lexer.Current.Region };
 			if (!(lexer.Next() is Tokens.Identifier))
-				new Exception.SyntaxError("function identifier", lexer).Throw();
+				new Exception.SyntaxError("class identifier", lexer).Throw();
 			result.Name = new IdentifierPattern(lexer.Current as Tokens.Identifier);
-			if (!(lexer.Next() is Tokens.LeftParenthesis))
-				new Exception.SyntaxError("left parenthesis \"(\"", lexer).Throw();
-			result.Arguments = TuplePattern.ParseTuplePattern(lexer);
 			result.Statements = new Collection.ReadOnlyVector<Statement>(Statement.ParseCodeBlock(lexer).ToArray());
 			return result;
 		}

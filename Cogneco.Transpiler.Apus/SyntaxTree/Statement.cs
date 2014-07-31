@@ -56,6 +56,12 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 					case Tokens.Keywords.Func:
 						result = FunctionDeclaration.ParseFunctionDeclaration(lexer);
 						break;
+					case Tokens.Keywords.Struct:
+						result = StructureDeclaration.ParseStructureDeclaration(lexer);
+						break;
+					case Tokens.Keywords.Class:
+						result = ClassDeclaration.ParseClassDeclaration(lexer);
+						break;
 					default:
 						result = Expression.ParseExpression(lexer);
 						break;
