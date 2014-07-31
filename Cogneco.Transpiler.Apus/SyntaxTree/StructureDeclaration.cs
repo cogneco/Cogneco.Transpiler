@@ -34,12 +34,15 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public StructureDeclaration()
 		{
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			Text.Builder result = "struct ";
-			result += this.Name;
-			result += " { " + this.Statements.Map(s => s.ToString()).Join("; ") + " }";
-			return result;
+			return indenter.Write("struct ") &&
+			this.Name.Write(indenter) &&
+			indenter.WriteLine("{") &&
+			indenter.AddIndent() &&
+			this.Statements.All(statement => statement.Write(indenter)) &&
+			indenter.RemoveIndent() &&
+			indenter.WriteLine("}");
 		}
 		#region Static Parse
 		public static StructureDeclaration ParseStructureDeclaration(Tokens.Lexer lexer)

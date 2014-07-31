@@ -21,6 +21,7 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -31,9 +32,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		{
 			this.Value = token.Value;
 		}
-		protected override string ToStringHelper()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return this.Value.AsString();
+			return indenter.Write(this.Value);
 		}
 	}
 }

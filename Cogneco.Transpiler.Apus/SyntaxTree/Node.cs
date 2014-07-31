@@ -31,7 +31,13 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		protected Node()
 		{
 		}
-		//internal abstract bool Write(Text.Indenter indenter);
+		public override string ToString()
+		{
+			var result = new Text.Writer();
+			this.Write(Text.Indenter.Open(result));
+			return result;
+		}
+		internal abstract bool Write(Text.Indenter indenter);
 	}
 }
 

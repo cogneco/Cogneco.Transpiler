@@ -16,7 +16,7 @@ namespace Cogneco.Transpiler.Run
 			argumentParser.Parse(arguments);
 			var parser = new Apus.SyntaxTree.Parser();
 			foreach (var statement in parser.Parse(program))
-				Console.WriteLine(statement);
+				Console.Write(statement);
 		}
 	}
 }

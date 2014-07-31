@@ -23,6 +23,7 @@ using System;
 using Collection = Kean.Collection;
 using Kean.Extension;
 using Uri = Kean.Uri;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -33,9 +34,12 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public TuplePattern()
 		{
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return "(" + this.Items.Map(item => item.ToString()).Join(", ") + ")";
+			int count = 0;
+			return indenter.Write("(") &&
+			this.Items.All(item => (count++ == 0 || indenter.Write(", ")) && item.Write(indenter)) &&
+			indenter.Write(")");
 		}
 		#region Static Parse
 		internal static TuplePattern ParseTuplePattern(Tokens.Lexer lexer)

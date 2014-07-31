@@ -21,6 +21,7 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -34,9 +35,12 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		{
 			this.constant = constant;
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return string.Format("{0} {1} = {2}", this.Constant ? "let" : "var", this.Pattern, this.Expression);
+			return indenter.Write(this.Constant ? "let " : "var ") &&
+			this.Pattern.Write(indenter) &&
+			indenter.Write(" = ") &&
+			this.Expression.Write(indenter);
 		}
 		#region Static Parse
 		internal static VariableDeclaration ParseVariableDeclaration(Tokens.Lexer lexer, bool constant)

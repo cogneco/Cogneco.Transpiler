@@ -21,6 +21,7 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -31,9 +32,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		protected Pattern()
 		{
 		}
-		protected string TypeString()
+		protected bool WriteType(Text.Indenter indenter)
 		{
-			return this.AssignedType.NotNull() ? ": " + this.AssignedType : "";
+			return this.AssignedType.IsNull() || indenter.Write(": ") && this.AssignedType.Write(indenter);
 		}
 		#region Static Parse
 		internal static Pattern ParsePattern(Tokens.Lexer lexer)

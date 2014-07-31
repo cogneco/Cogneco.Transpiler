@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -31,9 +32,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		{
 			this.name = name;
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return this.Name;
+			return indenter.Write(this.Name);
 		}
 	}
 }

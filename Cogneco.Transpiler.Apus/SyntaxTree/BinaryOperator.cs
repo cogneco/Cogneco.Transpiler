@@ -21,6 +21,7 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -40,7 +41,7 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			this.precedence = precedence;
 			this.associativity = associativity;
 		}
-		protected override string ToStringHelper()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
 			var leftPrecedence = this.Precedence; 
 			var rightPrecedence = this.Precedence;
@@ -54,7 +55,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 					break;
 			}
 			//leftPrecedence = rightPrecedence = int.MaxValue;
-			return string.Format(this.Precedence > 200 ? "{1}{0}{2}" : "{1} {0} {2}", this.Symbol, this.Left.ToString(leftPrecedence), this.Right.ToString(rightPrecedence));
+			return this.Left.Write(leftPrecedence, indenter) &&
+			indenter.Write(this.Precedence > 200 ? this.Symbol : " " + this.Symbol + " ") &&
+			this.Right.Write(rightPrecedence, indenter);
 		}
 		#region Static Create
 		public static BinaryOperator Create(Tokens.BinaryOperator token)

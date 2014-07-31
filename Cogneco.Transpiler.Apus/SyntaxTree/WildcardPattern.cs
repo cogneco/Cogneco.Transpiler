@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -28,9 +29,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public WildcardPattern()
 		{
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return "_";
+			return indenter.Write("_");
 		}
 	}
 }

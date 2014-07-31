@@ -21,6 +21,7 @@
 
 using System;
 using System.Security;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -32,9 +33,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			this.Name = identifier.Name;
 			this.Region = identifier.Region;
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return this.Name + this.TypeString();
+			return indenter.Write(this.Name) && this.WriteType(indenter);
 		}
 	}
 }

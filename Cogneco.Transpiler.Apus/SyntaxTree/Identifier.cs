@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -34,9 +35,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		{
 			this.name = name;
 		}
-		protected override string ToStringHelper()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return this.Name;
+			return indenter.Write(this.Name);
 		}
 		#region Static Parse
 		internal static Identifier ParseIdentifier(Tokens.Lexer lexer)

@@ -34,12 +34,15 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public ClassDeclaration()
 		{
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			Text.Builder result = "class ";
-			result += this.Name;
-			result += " { " + this.Statements.Map(s => s.ToString()).Join("; ") + " }";
-			return result;
+			return indenter.Write("class ") &&
+			this.Name.Write(indenter) &&
+			indenter.WriteLine("{") &&
+			indenter.AddIndent() &&
+			this.Statements.All(statement => statement.Write(indenter)) &&
+			indenter.RemoveIndent() &&
+			indenter.WriteLine("}");
 		}
 		#region Static Parse
 		public static ClassDeclaration ParseClassDeclaration(Tokens.Lexer lexer)

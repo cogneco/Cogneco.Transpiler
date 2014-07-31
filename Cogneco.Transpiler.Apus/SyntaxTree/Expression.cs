@@ -24,6 +24,7 @@ using Generic = System.Collections.Generic;
 using Uri = Kean.Uri;
 using IO = Kean.IO;
 using Collection = Kean.Collection;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -35,22 +36,15 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		protected Expression()
 		{
 		}
-		public string ToString(int precedence)
+		internal bool Write(int precedence, Text.Indenter indenter)
 		{
-			string result = this.ToStringHelper();
-			if (precedence > this.Precedence)
-				result = "(" + result + ")";
-			return result + this.TypeString();
+			return precedence > this.Precedence ? indenter.Write("(") && this.Write(indenter) && indenter.Write(")") : this.Write(indenter);
 		}
-		public sealed override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return this.ToStringHelper() + this.TypeString();
+			return this.WriteHelper(indenter) && (this.AssignedType.IsNull() || indenter.Write(": " + this.AssignedType));
 		}
-		string TypeString()
-		{
-			return this.AssignedType.NotNull() ? ": " + this.AssignedType : "";
-		}
-		protected abstract string ToStringHelper();
+		protected abstract bool WriteHelper(Text.Indenter indenter);
 		#region Static Parse
 		internal static Expression ParseExpression(Tokens.Lexer lexer)
 		{

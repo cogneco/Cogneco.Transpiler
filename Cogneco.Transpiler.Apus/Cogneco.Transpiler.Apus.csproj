@@ -42,7 +42,6 @@
     <Compile Include="SyntaxTree\IdentifierPattern.cs" />
     <Compile Include="SyntaxTree\IntegerLiteral.cs" />
     <Compile Include="SyntaxTree\Literal.cs" />
-    <Compile Include="SyntaxTree\Module.cs" />
     <Compile Include="SyntaxTree\Node.cs" />
     <Compile Include="SyntaxTree\Operator.cs" />
     <Compile Include="SyntaxTree\Parser.cs" />

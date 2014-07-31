@@ -23,7 +23,7 @@ using System;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class Declaration : Statement
+	public abstract class Declaration : Statement
 	{
 		public Declaration()
 		{

@@ -22,6 +22,7 @@
 using System;
 using Collection = Kean.Collection;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -33,9 +34,11 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public TupleExpression()
 		{
 		}
-		protected override string ToStringHelper()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return "(" + this.Items.Map(item => item.ToString()).Join(", ") + ")";
+			return indenter.Write("(") &&
+			this.Items.All(item => item.Write(indenter) && indenter.Write(", ")) &&
+			indenter.Write(")");
 		}
 	}
 }
