@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  WildcardPattern.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class WildcardPattern : Pattern
 	{
-		protected Parser()
+		public WildcardPattern()
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		public override string ToString()
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return "_";
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

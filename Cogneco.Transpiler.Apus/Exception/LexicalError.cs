@@ -23,21 +23,15 @@ using System;
 using Error = Kean.Error;
 using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.Exception
+namespace Cogneco.Transpiler.Apus.Exception
 {
-	public class LexicalError : Exception
+	public class LexicalError : Transpiler.Exception.LexicalError
 	{
-		public string Expected { get; private set; }
-		public string Found { get; private set; }
-		public Uri.Region Region { get; private set; }
 		protected internal LexicalError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
 		}
-		protected internal LexicalError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Lexical Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
+		protected internal LexicalError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, expected, found, region)
 		{
-			this.Expected = expected;
-			this.Found = found;
-			this.Region = region;
 		}
 	}
 }

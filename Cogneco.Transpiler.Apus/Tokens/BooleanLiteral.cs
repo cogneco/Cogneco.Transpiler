@@ -1,5 +1,5 @@
 ﻿//
-//  LexicalError.cs
+//  BooleanLitteral.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,24 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Error = Kean.Error;
 using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.Exception
+namespace Cogneco.Transpiler.Apus.Tokens
 {
-	public class LexicalError : Exception
+	public class BooleanLiteral : Literal
 	{
-		public string Expected { get; private set; }
-		public string Found { get; private set; }
-		public Uri.Region Region { get; private set; }
-		protected internal LexicalError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
+		public readonly bool Value;
+		public BooleanLiteral(bool value, Uri.Region region) : base(value ? "true" : "false", region)
 		{
-		}
-		protected internal LexicalError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Lexical Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
-		{
-			this.Expected = expected;
-			this.Found = found;
-			this.Region = region;
+			this.Value = value;
 		}
 	}
 }

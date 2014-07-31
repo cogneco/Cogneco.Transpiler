@@ -42,55 +42,11 @@
     <Compile Include="Pom\Type\Expression.cs" />
     <Compile Include="Pom\Type\Tuple.cs" />
     <Compile Include="Pom\Type\Function.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Token.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Keyword.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Identifier.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Keywords.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Literal.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\IntegerLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\FloatingPointLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\StringLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Operator.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\BinaryOperator.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\PrefixOperator.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\PostfixOperator.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\BooleanLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\NullLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Lexer.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\WhiteSpace.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Comment.cs" />
     <Compile Include="Exception\Exception.cs" />
     <Compile Include="Exception\LexicalError.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Separator.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\LeftParenthesis.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\RightParenthesis.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\LeftBracket.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\RightBracket.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\LeftBrace.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\RightBrace.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Comma.cs" />
-    <Compile Include="FrontEnd\Apus\Tokens\Semicolon.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Module.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Declaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\VariableDeclaration.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\IdentifierPattern.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Pattern.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Node.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Expression.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Type.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\TupleExpression.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\IntegerLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Literal.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\FloatingPointLiteral.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Operator.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\BinaryOperator.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Associativity.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Parser.cs" />
     <Compile Include="FrontEnd\Parser.cs" />
     <Compile Include="Exception\SyntaxError.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Identifier.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\TypeIdentifier.cs" />
-    <Compile Include="FrontEnd\Apus\SyntaxTree\Statement.cs" />
+    <Compile Include="FrontEnd\Lexer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -99,9 +55,6 @@
     <Folder Include="Pom\Type\" />
     <Folder Include="Backend\" />
     <Folder Include="Backend\C99\" />
-    <Folder Include="FrontEnd\Apus\" />
-    <Folder Include="FrontEnd\Apus\SyntaxTree\" />
-    <Folder Include="FrontEnd\Apus\Tokens\" />
     <Folder Include="Exception\" />
   </ItemGroup>
   <ItemGroup>

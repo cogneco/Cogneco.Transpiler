@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  TupleExpression.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Collection = Kean.Collection;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class TupleExpression : Expression
 	{
-		protected Parser()
+		public override int Precedence { get { return 500; } }
+		readonly Collection.IList<Expression> items = new Collection.List<Expression>();
+		public Collection.IList<Expression> Items { get { return this.items; } }
+		public TupleExpression()
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		protected override string ToStringHelper()
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return "(" + this.Items.Map(item => item.ToString()).Join(", ") + ")";
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

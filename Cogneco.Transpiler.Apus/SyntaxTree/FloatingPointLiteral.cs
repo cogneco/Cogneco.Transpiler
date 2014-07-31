@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  FloatingPointLiteral.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,24 +21,20 @@
 
 using System;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class FloatingPointLiteral : Literal
 	{
-		protected Parser()
+		public double Value { get; set; }
+		public FloatingPointLiteral(Tokens.FloatingPointLiteral token) : base(token)
 		{
+			this.Value = token.Value;
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		protected override string ToStringHelper()
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return this.Value.AsString();
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

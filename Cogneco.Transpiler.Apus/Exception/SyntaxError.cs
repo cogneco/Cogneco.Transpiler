@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  SyntaxError.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,24 +21,23 @@
 
 using System;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
+using Error = Kean.Error;
 using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.Exception
 {
-	public abstract class Parser<TResult>
+	public class SyntaxError : Transpiler.Exception.SyntaxError
 	{
-		protected Parser()
+		internal SyntaxError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		internal SyntaxError(string expected, Tokens.Lexer lexer)
+			: this(null, expected, lexer.Current.NotNull() ? "\"" + lexer.Current.Raw + "\"" : "nothing", lexer.Current.NotNull() ? lexer.Current.Region : lexer.Last.Region)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		internal SyntaxError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, expected, found, region)
+		{
+		}
 	}
 }
 

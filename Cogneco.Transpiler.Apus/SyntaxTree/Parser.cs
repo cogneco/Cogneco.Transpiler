@@ -24,21 +24,19 @@ using Kean.Extension;
 using Generic = System.Collections.Generic;
 using Uri = Kean.Uri;
 using IO = Kean.IO;
+using Collection = Kean.Collection;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class Parser : FrontEnd.Parser<Statement>
 	{
-		protected Parser()
+		public Parser()
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		public override Generic.IEnumerable<Statement> Parse(IO.ICharacterReader reader)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return Statement.ParseStatements(Tokens.Lexer.Open(reader));
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

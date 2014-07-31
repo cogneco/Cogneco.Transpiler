@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{907216FA-9143-497B-9F7E-2566844F232E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Cogneco.Transpiler.Apus</RootNamespace>
+    <AssemblyName>Cogneco.Transpiler.Apus</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyntaxTree\Associativity.cs" />
+    <Compile Include="SyntaxTree\BinaryOperator.cs" />
+    <Compile Include="SyntaxTree\Declaration.cs" />
+    <Compile Include="SyntaxTree\Expression.cs" />
+    <Compile Include="SyntaxTree\FloatingPointLiteral.cs" />
+    <Compile Include="SyntaxTree\FunctionDeclaration.cs" />
+    <Compile Include="SyntaxTree\Identifier.cs" />
+    <Compile Include="SyntaxTree\IdentifierPattern.cs" />
+    <Compile Include="SyntaxTree\IntegerLiteral.cs" />
+    <Compile Include="SyntaxTree\Literal.cs" />
+    <Compile Include="SyntaxTree\Module.cs" />
+    <Compile Include="SyntaxTree\Node.cs" />
+    <Compile Include="SyntaxTree\Operator.cs" />
+    <Compile Include="SyntaxTree\Parser.cs" />
+    <Compile Include="SyntaxTree\Pattern.cs" />
+    <Compile Include="SyntaxTree\Statement.cs" />
+    <Compile Include="SyntaxTree\TupleExpression.cs" />
+    <Compile Include="SyntaxTree\TuplePattern.cs" />
+    <Compile Include="SyntaxTree\Type.cs" />
+    <Compile Include="SyntaxTree\TypeIdentifier.cs" />
+    <Compile Include="SyntaxTree\VariableDeclaration.cs" />
+    <Compile Include="SyntaxTree\WildcardPattern.cs" />
+    <Compile Include="Tokens\BinaryOperator.cs" />
+    <Compile Include="Tokens\BooleanLiteral.cs" />
+    <Compile Include="Tokens\Comma.cs" />
+    <Compile Include="Tokens\Comment.cs" />
+    <Compile Include="Tokens\FloatingPointLiteral.cs" />
+    <Compile Include="Tokens\Identifier.cs" />
+    <Compile Include="Tokens\IntegerLiteral.cs" />
+    <Compile Include="Tokens\Keyword.cs" />
+    <Compile Include="Tokens\Keywords.cs" />
+    <Compile Include="Tokens\LeftBrace.cs" />
+    <Compile Include="Tokens\LeftBracket.cs" />
+    <Compile Include="Tokens\LeftParenthesis.cs" />
+    <Compile Include="Tokens\Lexer.cs" />
+    <Compile Include="Tokens\Literal.cs" />
+    <Compile Include="Tokens\NullLiteral.cs" />
+    <Compile Include="Tokens\Operator.cs" />
+    <Compile Include="Tokens\PostfixOperator.cs" />
+    <Compile Include="Tokens\PrefixOperator.cs" />
+    <Compile Include="Tokens\RightBrace.cs" />
+    <Compile Include="Tokens\RightBracket.cs" />
+    <Compile Include="Tokens\RightParenthesis.cs" />
+    <Compile Include="Tokens\Semicolon.cs" />
+    <Compile Include="Tokens\Separator.cs" />
+    <Compile Include="Tokens\StringLiteral.cs" />
+    <Compile Include="Tokens\Token.cs" />
+    <Compile Include="Tokens\Tokenizer.cs" />
+    <Compile Include="Tokens\WhiteSpace.cs" />
+    <Compile Include="Exception\LexicalError.cs" />
+    <Compile Include="Exception\SyntaxError.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Cogneco.Transpiler\Cogneco.Transpiler.csproj">
+      <Project>{7335A11B-06C7-4F27-8079-1FD42B635D21}</Project>
+      <Name>Cogneco.Transpiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kean\Kean\Kean.csproj">
+      <Project>{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}</Project>
+      <Name>Kean</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

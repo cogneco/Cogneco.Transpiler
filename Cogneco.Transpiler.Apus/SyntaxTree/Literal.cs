@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Literal.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public abstract class Literal : Expression
 	{
-		protected Parser()
+		public override int Precedence { get { return 500; } }
+		public string Raw { get; set; }
+		protected Literal(Tokens.Literal token)
 		{
+			this.Raw = token.Raw;
+			this.Region = token.Region;
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		#region Static Create
+		public static Literal Create(Tokens.Literal token)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return 
+				token is Tokens.IntegerLiteral ? (Literal)new IntegerLiteral(token as Tokens.IntegerLiteral) :
+				token is Tokens.FloatingPointLiteral ? (Literal)new FloatingPointLiteral(token as Tokens.FloatingPointLiteral) :
+				null;
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		#endregion
 	}
 }
 

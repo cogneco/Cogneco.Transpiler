@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Lexer.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,24 +21,32 @@
 
 using System;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
 using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.Tokens
 {
-	public abstract class Parser<TResult>
+	public class Lexer : FrontEnd.Lexer<Token>
 	{
-		protected Parser()
+		public override Token Next()
+		{
+			Token result = base.Next();
+			if (result is WhiteSpace || result is Comment)
+				result = this.Next();
+			return result;
+		}
+		Lexer(Tokenizer tokenizer) : base(tokenizer)
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		#region Static Open
+		public static Lexer Open(IO.ICharacterReader reader)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return Lexer.Open(Tokenizer.Open(reader));
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		static Lexer Open(Tokenizer tokenizer)
+		{
+			return tokenizer.NotNull() ? new Lexer(tokenizer) : null;
+		}
+		#endregion
 	}
 }
 

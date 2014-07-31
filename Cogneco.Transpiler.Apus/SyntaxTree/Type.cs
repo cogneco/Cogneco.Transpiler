@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Type.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,24 +21,33 @@
 
 using System;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public abstract class Type : Node
 	{
-		protected Parser()
+		protected Type()
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		#region Static Parse
+		internal static Type ParseType(Tokens.Lexer lexer)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			Type result = null;
+			if (lexer.Current is Tokens.Identifier)
+			{
+				result = new TypeIdentifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
+				lexer.Next();
+			}
+			else if (lexer.Current is Tokens.RightParenthesis)
+			{
+				result = new TypeIdentifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
+				lexer.Next();
+			}
+			else
+				new Exception.SyntaxError("type expression", lexer).Throw();
+			return result;
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		#endregion
 	}
 }
 

@@ -30,10 +30,10 @@ namespace Cogneco.Transpiler.Exception
 		public string Expected { get; private set; }
 		public string Found { get; private set; }
 		public Uri.Region Region { get; private set; }
-		internal SyntaxError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
+		protected internal SyntaxError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
 		}
-		internal SyntaxError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Syntax Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
+		protected internal SyntaxError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Syntax Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
 		{
 			this.Expected = expected;
 			this.Found = found;

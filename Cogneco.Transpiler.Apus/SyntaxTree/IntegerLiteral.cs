@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  ConstantExpression.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class IntegerLiteral : Literal
 	{
-		protected Parser()
+		public long Value { get; set; }
+		public IntegerLiteral(Tokens.IntegerLiteral token) : base(token)
 		{
+			this.Value = token.Value;
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		protected override string ToStringHelper()
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return this.Value.ToString();
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

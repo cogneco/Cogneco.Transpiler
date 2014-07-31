@@ -21,7 +21,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
-    <Commandlineparameters>file://../../examples/apus/constantDeclaration.apus</Commandlineparameters>
+    <Commandlineparameters>file://../../examples/apus/functionDeclaration.apus</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -48,6 +48,10 @@
     <ProjectReference Include="..\Cogneco.Transpiler\Cogneco.Transpiler.csproj">
       <Project>{7335A11B-06C7-4F27-8079-1FD42B635D21}</Project>
       <Name>Cogneco.Transpiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cogneco.Transpiler.Apus\Cogneco.Transpiler.Apus.csproj">
+      <Project>{907216FA-9143-497B-9F7E-2566844F232E}</Project>
+      <Name>Cogneco.Transpiler.Apus</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

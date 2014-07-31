@@ -1,5 +1,5 @@
 ﻿//
-//  LexicalError.cs
+//  FloatingPointLiteral.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,24 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Error = Kean.Error;
 using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.Exception
+namespace Cogneco.Transpiler.Apus.Tokens
 {
-	public class LexicalError : Exception
+	public class FloatingPointLiteral : Literal
 	{
-		public string Expected { get; private set; }
-		public string Found { get; private set; }
-		public Uri.Region Region { get; private set; }
-		protected internal LexicalError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
+		public double Value { get; private set; }
+		FloatingPointLiteral(double value, string raw, Uri.Region region) : base(raw, region)
 		{
+			this.Value = value;
 		}
-		protected internal LexicalError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, Error.Level.Critical, "Lexical Error", "Expected {0}, but found {1}, at {2}.", expected, found, region.ToString())
+		public static FloatingPointLiteral Parse(string raw, Uri.Region region)
 		{
-			this.Expected = expected;
-			this.Found = found;
-			this.Region = region;
+			FloatingPointLiteral result = null;
+			double v;
+			if (double.TryParse(raw, out v))
+				result = new FloatingPointLiteral(v, raw, region);
+			else
+				new Exception.LexicalError("an floating point literal", "\"" + raw + "\"", region).Throw();
+			return result;
 		}
 	}
 }

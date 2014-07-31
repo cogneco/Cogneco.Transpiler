@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  IdentifierPattern.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
+using System.Security;
 
-namespace Cogneco.Transpiler.FrontEnd
+namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Parser<TResult>
+	public class IdentifierPattern : Pattern
 	{
-		protected Parser()
+		public string Name { get; set; }
+		public IdentifierPattern(Tokens.Identifier identifier)
 		{
+			this.Name = identifier.Name;
+			this.Region = identifier.Region;
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		public override string ToString()
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			return this.Name + this.TypeString();
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
 	}
 }
 

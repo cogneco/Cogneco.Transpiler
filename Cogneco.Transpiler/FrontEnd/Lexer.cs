@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Lexer.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -27,18 +27,35 @@ using IO = Kean.IO;
 
 namespace Cogneco.Transpiler.FrontEnd
 {
-	public abstract class Parser<TResult>
+	public abstract class Lexer<TToken> where TToken : class
 	{
-		protected Parser()
-		{
+		TToken current;
+		public TToken Current
+		{ 
+			get { return this.current; }
+			private set
+			{
+				if (this.current.NotNull())
+					this.Last = this.current;
+				this.current = value;
+			}
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		public TToken Last { get; private set; }
+		Generic.IEnumerator<TToken> backend;
+		public bool Empty { get { return this.Current.IsNull(); } }
+		protected Lexer(Generic.IEnumerable<TToken> backend)
 		{
-			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+			this.backend = backend.GetEnumerator();
+			this.Next();
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		public virtual TToken Next()
+		{
+			return this.Current = (this.backend.MoveNext() ? this.backend.Current : null);
+		}
+		public override string ToString()
+		{
+			return string.Format("[Lexer: Current={0}, Last={1}, Empty={2}]", this.Current, this.Last, this.Empty);
+		}
 	}
 }
 
