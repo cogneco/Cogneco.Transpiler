@@ -25,20 +25,14 @@ using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class BinaryOperator : Operator
+	public class InfixOperator : Operator
 	{
-		readonly string symbol;
-		public override string Symbol { get { return this.symbol; } }
-		readonly int precedence;
-		public override int Precedence { get { return this.precedence; } }
 		readonly Associativity associativity;
 		public Associativity Associativity { get { return this.associativity; } }
 		public Expression Left { get; set; }
 		public Expression Right { get; set; }
-		BinaryOperator(string symbol, int precedence, Associativity associativity)
+		InfixOperator(string symbol, int precedence, Associativity associativity) : base(symbol, precedence)
 		{
-			this.symbol = symbol;
-			this.precedence = precedence;
 			this.associativity = associativity;
 		}
 		protected override bool WriteHelper(Text.Indenter indenter)
@@ -60,16 +54,16 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			this.Right.Write(rightPrecedence, indenter);
 		}
 		#region Static Create
-		public static BinaryOperator Create(Tokens.BinaryOperator token)
+		public static InfixOperator Create(Tokens.InfixOperator token)
 		{
-			BinaryOperator result = BinaryOperator.Create(token.Name);
+			InfixOperator result = InfixOperator.Create(token.Symbol);
 			if (result.NotNull())
 				result.Region = token.Region;
 			return result;
 		}
-		public static BinaryOperator Create(string symbol)
+		public static InfixOperator Create(string symbol)
 		{
-			BinaryOperator result;
+			InfixOperator result;
 			switch (symbol)
 			{
 				default:
@@ -77,36 +71,36 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 					break;
 			// Resolving
 				case ".":
-					result = new BinaryOperator(symbol, 300, Associativity.None);
+					result = new InfixOperator(symbol, 300, Associativity.None);
 					break;
 			// Exponentive
 				case "<<":
 				case ">>":
-					result = new BinaryOperator(symbol, 160, Associativity.None);
+					result = new InfixOperator(symbol, 160, Associativity.None);
 					break;
 			// Multiplicative
 				case "*":
 				case "/":
 				case "%":
 				case "&":
-					result = new BinaryOperator(symbol, 150, Associativity.Left);
+					result = new InfixOperator(symbol, 150, Associativity.Left);
 					break;
 			// Additive
 				case "+":
 				case "-":
 				case "|":
 				case "^":
-					result = new BinaryOperator(symbol, 140, Associativity.Left);
+					result = new InfixOperator(symbol, 140, Associativity.Left);
 					break;
 			// Range
 				case "..":
 				case "...":
-					result = new BinaryOperator(symbol, 135, Associativity.None);
+					result = new InfixOperator(symbol, 135, Associativity.None);
 					break;
 			// Cast
 				case "is":
 				case "as":
-					result = new BinaryOperator(symbol, 132, Associativity.None);
+					result = new InfixOperator(symbol, 132, Associativity.None);
 					break;
 			// Comparative
 				case "<":
@@ -118,15 +112,15 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 				case "===":
 				case "!==":
 				case "~=":
-					result = new BinaryOperator(symbol, 130, Associativity.None);
+					result = new InfixOperator(symbol, 130, Associativity.None);
 					break;
 			// Conjuctive
 				case "&&":
-					result = new BinaryOperator(symbol, 120, Associativity.Left);
+					result = new InfixOperator(symbol, 120, Associativity.Left);
 					break;
 			// Disjunctive
 				case "||":
-					result = new BinaryOperator(symbol, 110, Associativity.Left);
+					result = new InfixOperator(symbol, 110, Associativity.Left);
 					break;
 			// Assignment
 				case "=":
@@ -141,7 +135,7 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 				case "|=":
 				case "&&=": 
 				case "||=":
-					result = new BinaryOperator(symbol, 90, Associativity.Right);
+					result = new InfixOperator(symbol, 90, Associativity.Right);
 					break;
 			}
 			return result;

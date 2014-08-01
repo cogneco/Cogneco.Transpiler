@@ -1,5 +1,5 @@
 ﻿//
-//  StructureDeclaration.cs
+//  TypeTuple.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,39 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Kean.Extension;
 using Collection = Kean.Collection;
-using Kean.Collection.Extension;
+using Kean.Extension;
+using Uri = Kean.Uri;
 using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class StructureDeclaration : Declaration
+	public class TypeTuple : Type
 	{
-		public IdentifierPattern Name { get; private set; }
-		public Collection.IReadOnlyVector<Statement> Statements { get; private set; }
-		public StructureDeclaration()
+		readonly Collection.IList<Type> items = new Collection.List<Type>();
+		public Collection.IList<Type> Items { get { return this.items; } }
+
+		public TypeTuple()
 		{
 		}
 		internal override bool Write(Text.Indenter indenter)
 		{
-			return indenter.Write("struct ") &&
-			this.Name.Write(indenter) &&
-			indenter.WriteLine("{") &&
-			indenter.AddIndent() &&
-			this.Statements.All(statement => statement.Write(indenter) && indenter.WriteLine()) &&
-			indenter.RemoveIndent() &&
-			indenter.WriteLine("}");
+			int count = 0;
+			return indenter.Write("(") &&
+			this.Items.All(item => (count++ == 0 || indenter.Write(", ")) && item.Write(indenter)) &&
+			indenter.Write(")");
 		}
 		#region Static Parse
-		public static StructureDeclaration ParseStructureDeclaration(Tokens.Lexer lexer)
+		internal static TypeTuple ParseTypeTuple(Tokens.Lexer lexer)
 		{
-			var result = new StructureDeclaration() { Region = lexer.Current.Region };
-			if (!(lexer.Next() is Tokens.Identifier))
-				new Exception.SyntaxError("structure identifier", lexer).Throw();
-			result.Name = new IdentifierPattern(lexer.Current as Tokens.Identifier);
+			if (!(lexer.Current is Tokens.LeftParenthesis))
+				new Exception.SyntaxError("left parenthesis \"(\"", lexer).Throw();
+			TypeTuple result = new TypeTuple { Region = lexer.Current.Region };
+			if (!(lexer.Next() is Tokens.RightParenthesis))
+			{
+				do
+					result.Items.Add(Type.ParseType(lexer));
+				while (lexer.Current is Tokens.Comma && lexer.Next().NotNull());
+				if (!(lexer.Current is Tokens.RightParenthesis))
+					new Exception.SyntaxError("right parenthesis \")\"", lexer).Throw();
+			}
 			lexer.Next();
-			result.Statements = new Collection.ReadOnlyVector<Statement>(Statement.ParseCodeBlock(lexer).ToArray());
 			return result;
 		}
 		#endregion

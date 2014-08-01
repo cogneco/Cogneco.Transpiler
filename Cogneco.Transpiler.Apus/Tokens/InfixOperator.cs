@@ -24,9 +24,9 @@ using Uri = Kean.Uri;
 
 namespace Cogneco.Transpiler.Apus.Tokens
 {
-	public class BinaryOperator : Operator
+	public class InfixOperator : Operator
 	{
-		public BinaryOperator(string name, Uri.Region region) : base(name, region)
+		public InfixOperator(string name, Uri.Region region) : base(name, region)
 		{
 		}
 	}

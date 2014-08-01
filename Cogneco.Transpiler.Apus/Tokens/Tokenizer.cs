@@ -89,7 +89,7 @@ namespace Cogneco.Transpiler.Apus.Tokens
 						yield return last = 
 							last is WhiteSpace && !(this.IsSeparator(this.reader.Last) || this.IsWhiteSpace(this.reader.Last)) ? (Operator)new PrefixOperator(r, mark) :
 							!(last is WhiteSpace) && (this.IsSeparator(this.reader.Last) || this.IsWhiteSpace(this.reader.Last) || this.reader.Last == '.') ? (Operator)new PostfixOperator(r, mark) :
-							new BinaryOperator(r, mark);
+							new InfixOperator(r, mark);
 				}
 				else if (this.StartsNumber(this.reader.Last))
 				{

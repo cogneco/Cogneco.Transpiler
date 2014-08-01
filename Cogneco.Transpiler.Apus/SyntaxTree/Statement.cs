@@ -48,10 +48,10 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 				switch ((lexer.Current as Tokens.Keyword).Name)
 				{
 					case Tokens.Keywords.Let:
-						result = VariableDeclaration.ParseVariableDeclaration(lexer, true);
+						result = VariableDeclaration.ParseVariableDeclaration(lexer, true, false);
 						break;
 					case Tokens.Keywords.Var:
-						result = VariableDeclaration.ParseVariableDeclaration(lexer, false);
+						result = VariableDeclaration.ParseVariableDeclaration(lexer, false, false);
 						break;
 					case Tokens.Keywords.Func:
 						result = FunctionDeclaration.ParseFunctionDeclaration(lexer);

@@ -42,9 +42,9 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			this.Name.Write(indenter) &&
 			this.Arguments.Write(indenter) &&
 			(this.ReturnType.IsNull() || indenter.Write(" -> ") && this.ReturnType.Write(indenter)) &&
-			this.Statements.Count == 0 ? indenter.WriteLine(" { }") :
-				this.Statements.Count == 1 ? indenter.Write(" { ") && this.Statements[0].Write(indenter) && indenter.WriteLine(" }") :
-				indenter.WriteLine(" {") && indenter.AddIndent() && this.Statements.All(statement => statement.Write(indenter) && indenter.WriteLine()) && indenter.RemoveIndent() && indenter.WriteLine("}");
+			this.Statements.Count == 0 ? indenter.Write(" { }") :
+				this.Statements.Count == 1 ? indenter.Write(" { ") && this.Statements[0].Write(indenter) && indenter.Write(" }") :
+				indenter.WriteLine(" {") && indenter.AddIndent() && this.Statements.All(statement => statement.WriteLine(indenter)) && indenter.RemoveIndent() && indenter.Write("}");
 		}
 		#region Static Parse
 		internal static FunctionDeclaration ParseFunctionDeclaration(Tokens.Lexer lexer)
@@ -56,6 +56,11 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			if (!(lexer.Next() is Tokens.LeftParenthesis))
 				new Exception.SyntaxError("left parenthesis \"(\"", lexer).Throw();
 			result.Arguments = TuplePattern.ParseTuplePattern(lexer);
+			if (lexer.Current.Is<Tokens.InfixOperator>(token => token.Symbol == "->"))
+			{
+				lexer.Next();
+				result.ReturnType = Type.ParseType(lexer);
+			}
 			result.Statements = new Collection.ReadOnlyVector<Statement>(Statement.ParseCodeBlock(lexer).ToArray());
 			return result;
 		}

@@ -33,7 +33,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyntaxTree\Associativity.cs" />
-    <Compile Include="SyntaxTree\BinaryOperator.cs" />
     <Compile Include="SyntaxTree\Declaration.cs" />
     <Compile Include="SyntaxTree\Expression.cs" />
     <Compile Include="SyntaxTree\FloatingPointLiteral.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="SyntaxTree\TypeIdentifier.cs" />
     <Compile Include="SyntaxTree\VariableDeclaration.cs" />
     <Compile Include="SyntaxTree\WildcardPattern.cs" />
-    <Compile Include="Tokens\BinaryOperator.cs" />
     <Compile Include="Tokens\BooleanLiteral.cs" />
     <Compile Include="Tokens\Comma.cs" />
     <Compile Include="Tokens\Comment.cs" />
@@ -84,6 +82,12 @@
     <Compile Include="Exception\SyntaxError.cs" />
     <Compile Include="SyntaxTree\StructureDeclaration.cs" />
     <Compile Include="SyntaxTree\ClassDeclaration.cs" />
+    <Compile Include="SyntaxTree\VariableDefinition.cs" />
+    <Compile Include="SyntaxTree\TypeTuple.cs" />
+    <Compile Include="SyntaxTree\PrefixOperator.cs" />
+    <Compile Include="SyntaxTree\PostfixOperator.cs" />
+    <Compile Include="SyntaxTree\InfixOperator.cs" />
+    <Compile Include="Tokens\InfixOperator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

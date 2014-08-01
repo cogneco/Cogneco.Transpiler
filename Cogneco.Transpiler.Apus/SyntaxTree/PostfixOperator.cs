@@ -1,5 +1,5 @@
 ﻿//
-//  Type.cs
+//  PostfixOperator.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,27 +21,42 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Type : Node
+	public class PostfixOperator : Operator
 	{
-		protected Type()
+		public Expression Expression { get; set; }
+
+		public PostfixOperator(string symbol) : base(symbol, 250)
 		{
 		}
-		#region Static Parse
-		internal static Type ParseType(Tokens.Lexer lexer)
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			Type result = null;
-			if (lexer.Current is Tokens.Identifier)
+			return this.Expression.Write(this.Precedence, indenter) && indenter.Write(this.Symbol);
+		}
+		#region Static Create
+		public static PostfixOperator Create(Tokens.PostfixOperator token)
+		{
+			PostfixOperator result = PostfixOperator.Create(token.Symbol);
+			if (result.NotNull())
+				result.Region = token.Region;
+			return result;
+		}
+		public static PostfixOperator Create(string symbol)
+		{
+			PostfixOperator result;
+			switch (symbol)
 			{
-				result = new TypeIdentifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
-				lexer.Next();
+				default:
+					result = null;
+					break;
+				case "++":
+				case "--":
+					result = new PostfixOperator(symbol);
+					break;
 			}
-			else if (lexer.Current is Tokens.LeftParenthesis)
-				result = TypeTuple.ParseTypeTuple(lexer);
-			else
-				new Exception.SyntaxError("type expression", lexer).Throw();
 			return result;
 		}
 		#endregion

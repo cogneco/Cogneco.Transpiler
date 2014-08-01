@@ -28,7 +28,6 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 	public class VariableDeclaration : Declaration
 	{
 		public Pattern Pattern { get; set; }
-		public Expression Expression { get; set; }
 		readonly bool constant;
 		public bool Constant { get { return this.constant; } }
 		public VariableDeclaration(bool constant)
@@ -37,21 +36,28 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		}
 		internal override bool Write(Text.Indenter indenter)
 		{
-			return indenter.Write(this.Constant ? "let " : "var ") &&
-			this.Pattern.Write(indenter) &&
-			indenter.Write(" = ") &&
-			this.Expression.Write(indenter);
+			return indenter.Write(this.Constant ? "let " : "var ") && this.Pattern.Write(indenter);
 		}
 		#region Static Parse
-		internal static VariableDeclaration ParseVariableDeclaration(Tokens.Lexer lexer, bool constant)
+		internal static VariableDeclaration ParseVariableDeclaration(Tokens.Lexer lexer, bool constant, bool declarationOnly)
 		{
-			var result = new VariableDeclaration(constant) { Region = lexer.Current.Region };
+			VariableDeclaration result;
+			var region = lexer.Current.Region;
 			lexer.Next();
-			result.Pattern = Pattern.ParsePattern(lexer);
-			if (!lexer.Current.Is<Tokens.BinaryOperator>(t => t.Name == "="))
-				new Exception.SyntaxError("binary operator \"=\"", lexer).Throw();
-			lexer.Next();
-			result.Expression = Expression.ParseExpression(lexer);
+			var pattern = Pattern.ParsePattern(lexer);
+			if (lexer.Current.Is<Tokens.InfixOperator>(t => t.Symbol == "="))
+			{
+				if (declarationOnly)
+					new Exception.SyntaxError("declaration only without definition", lexer).Throw();
+				lexer.Next();
+				result = new VariableDefinition(constant) {
+					Region = region,
+					Pattern = pattern,
+					Expression = Expression.ParseExpression(lexer)
+				};
+			}
+			else
+				result = new VariableDeclaration(constant) { Region = region,  Pattern = pattern };
 			return result;
 		}
 		#endregion

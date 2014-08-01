@@ -25,9 +25,15 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
 	public abstract class Operator : Expression
 	{
-		public abstract string Symbol { get; }
-		protected Operator()
+		readonly string symbol;
+		public string Symbol { get { return this.symbol; } }
+		readonly int precedence;
+		public override int Precedence { get { return this.precedence; } }
+
+		protected Operator(string symbol, int precedence)
 		{
+			this.symbol = symbol;
+			this.precedence = precedence;
 		}
 	}
 }

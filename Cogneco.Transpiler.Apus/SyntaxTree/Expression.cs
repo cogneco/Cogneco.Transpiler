@@ -48,44 +48,59 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		#region Static Parse
 		internal static Expression ParseExpression(Tokens.Lexer lexer)
 		{
-			return Expression.ParseExpression(lexer, 0, new Collection.Stack<Expression>());
+			return Expression.ParseExpression(lexer, 0);
 		}
-		internal static Expression ParseExpression(Tokens.Lexer lexer, int precedence, Collection.IStack<Expression> stack)
+		static Expression ParseExpression(Tokens.Lexer lexer, int precedence)
 		{
 			Expression result = null;
-			Tokens.Token current = lexer.Current;
-			if (current is Tokens.Literal)
+			if (lexer.Current is Tokens.Literal)
 			{
-				result = Literal.Create(current as Tokens.Literal);
+				result = Literal.Create(lexer.Current as Tokens.Literal);
 				lexer.Next();
 			}
-			else if (current is Tokens.Identifier)
+			else if (lexer.Current is Tokens.Identifier)
 				result = Identifier.ParseIdentifier(lexer);
-			else if (current is Tokens.BinaryOperator)
-			{
-				BinaryOperator o = BinaryOperator.Create(current as Tokens.BinaryOperator);
-				if (o.NotNull() && precedence < o.Precedence)
-				{
-					if ((o.Left = stack.Pop()).IsNull())
-						new Exception.SyntaxError("left hand expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
-					if (lexer.Next().IsNull() || (o.Right = Expression.ParseExpression(lexer, o.Associativity == Associativity.Right ? o.Precedence + 1 : o.Precedence, stack)).IsNull())
-						new Exception.SyntaxError("right expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
-					result = o;
-				}
-			}
-			else if (current is Tokens.LeftParenthesis)
+			else if (lexer.Current is Tokens.LeftParenthesis)
 			{
 				if (lexer.Next().IsNull() || (result = Expression.ParseExpression(lexer)).IsNull() || !(lexer.Current is Tokens.RightParenthesis))
 					new Exception.SyntaxError("matching end parenthesis", lexer).Throw();
 				lexer.Next();
 			}
-			if (result.NotNull())
+			else if (lexer.Current is Tokens.PrefixOperator)
 			{
-				result = Expression.ParseExpression(lexer, precedence, stack.Push(result)) ?? stack.Pop();
-				if (lexer.Current.Is<Tokens.PostfixOperator>(t => t.Name == ":"))
-					result.AssignedType = Type.ParseType(lexer);
+				var o = PrefixOperator.Create(lexer.Current as Tokens.PrefixOperator);
+				lexer.Next();
+				o.Expression = Expression.ParseExpression(lexer, o.Precedence);
+				result = o;
 			}
-			return result;
+			return Expression.ParseExpressionEnd(lexer, precedence, result);
+		}
+		static Expression ParseExpression(Tokens.Lexer lexer, int precedence, Expression before)
+		{
+			Expression result = null;
+			if (lexer.Current is Tokens.InfixOperator)
+			{
+				InfixOperator o = InfixOperator.Create(lexer.Current as Tokens.InfixOperator);
+				if (o.NotNull() && precedence < o.Precedence)
+				{
+					if ((o.Left = before).IsNull())
+						new Exception.SyntaxError("left hand expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
+					if (lexer.Next().IsNull() || (o.Right = Expression.ParseExpression(lexer, o.Associativity == Associativity.Right ? o.Precedence + 1 : o.Precedence)).IsNull())
+						new Exception.SyntaxError("right expression of binary operator \"" + o.Symbol + "\"", "nothing", o.Region).Throw();
+					result = o;
+				}
+			}
+			return result.IsNull() ? before : Expression.ParseExpressionEnd(lexer, precedence, result);
+		}
+		static Expression ParseExpressionEnd(Tokens.Lexer lexer, int precedence, Expression before)
+		{
+			if (before.NotNull())
+			{
+				before = Expression.ParseExpression(lexer, precedence, before);
+				if (lexer.Current.Is<Tokens.PostfixOperator>(t => t.Symbol == ":"))
+					before.AssignedType = Type.ParseType(lexer);
+			}
+			return before;
 		}
 		#endregion
 	}

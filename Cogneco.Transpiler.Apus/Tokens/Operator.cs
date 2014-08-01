@@ -26,10 +26,10 @@ namespace Cogneco.Transpiler.Apus.Tokens
 {
 	public abstract class Operator : Token
 	{
-		public readonly string Name;
+		public readonly string Symbol;
 		protected Operator(string name, Uri.Region region) : base(name, region)
 		{
-			this.Name = name;
+			this.Symbol = name;
 		}
 	}
 }

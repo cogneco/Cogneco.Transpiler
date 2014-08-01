@@ -47,7 +47,7 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			Identifier result = null;
 			if (lexer.Current is Tokens.LeftParenthesis)
 				;// function call do ParseTupleExpression
-			else if (lexer.Current is Tokens.BinaryOperator && (lexer.Current as Tokens.BinaryOperator).Name == ".")
+			else if (lexer.Current is Tokens.InfixOperator && (lexer.Current as Tokens.InfixOperator).Symbol == ".")
 				;// parent resolve this with recursivecall
 			else
 				result = new Identifier(current.Name) { Region = current.Region };

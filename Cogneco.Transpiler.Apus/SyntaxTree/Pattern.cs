@@ -49,8 +49,11 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 				new Exception.SyntaxError("Identifier, Tuple Pattern or Wildcard", lexer.Current.Raw, lexer.Current.Region).Throw();
 				result = null;
 			}
-			if (lexer.Next().Is<Tokens.PostfixOperator>(t => t.Name == ":"))
+			if (lexer.Next().Is<Tokens.PostfixOperator>(t => t.Symbol == ":"))
+			{
+				lexer.Next();
 				result.AssignedType = Type.ParseType(lexer);
+			}
 			return result;
 		}
 		#endregion

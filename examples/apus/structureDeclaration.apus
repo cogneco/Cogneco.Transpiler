@@ -1,0 +1,12 @@
+struct Point {
+	func swap() -> () {
+		let t = x
+		x = y
+		y = t
+	}
+	var x: Float
+	var y: Float
+	func distanceCityBlock() -> Float {
+		x + y
+	}
+}

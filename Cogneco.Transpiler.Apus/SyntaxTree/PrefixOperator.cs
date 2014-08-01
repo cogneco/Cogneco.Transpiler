@@ -1,5 +1,5 @@
 ﻿//
-//  Type.cs
+//  PrefixOperator.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,30 +21,48 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Type : Node
+	public class PrefixOperator : Operator
 	{
-		protected Type()
+		public Expression Expression { get; set; }
+
+		public PrefixOperator(string symbol) : base(symbol, 250)
 		{
 		}
-		#region Static Parse
-		internal static Type ParseType(Tokens.Lexer lexer)
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			Type result = null;
-			if (lexer.Current is Tokens.Identifier)
+			return indenter.Write(this.Symbol) && this.Expression.Write(this.Precedence, indenter);
+		}
+		#region Static Create
+		public static PrefixOperator Create(Tokens.PrefixOperator token)
+		{
+			PrefixOperator result = PrefixOperator.Create(token.Symbol);
+			if (result.NotNull())
+				result.Region = token.Region;
+			return result;
+		}
+		public static PrefixOperator Create(string symbol)
+		{
+			PrefixOperator result;
+			switch (symbol)
 			{
-				result = new TypeIdentifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
-				lexer.Next();
+				default:
+					result = null;
+					break;
+				case "++":
+				case "--":
+				case "!":
+				case "~":
+				case "+":
+				case "-":
+					result = new PrefixOperator(symbol);
+					break;
 			}
-			else if (lexer.Current is Tokens.LeftParenthesis)
-				result = TypeTuple.ParseTypeTuple(lexer);
-			else
-				new Exception.SyntaxError("type expression", lexer).Throw();
 			return result;
 		}
 		#endregion
 	}
 }
-

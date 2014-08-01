@@ -38,6 +38,10 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			return result;
 		}
 		internal abstract bool Write(Text.Indenter indenter);
+		internal virtual bool WriteLine(Text.Indenter indenter)
+		{
+			return this.Write(indenter) && indenter.WriteLine();
+		}
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿//
-//  Type.cs
+//  VariableDefinition.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,30 +21,22 @@
 
 using System;
 using Kean.Extension;
+using Text = Kean.IO.Text;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Type : Node
+	public class VariableDefinition : VariableDeclaration
 	{
-		protected Type()
+		public Expression Expression { get; set; }
+		public VariableDefinition(bool constant) : base(constant)
 		{
 		}
-		#region Static Parse
-		internal static Type ParseType(Tokens.Lexer lexer)
+		internal override bool Write(Text.Indenter indenter)
 		{
-			Type result = null;
-			if (lexer.Current is Tokens.Identifier)
-			{
-				result = new TypeIdentifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
-				lexer.Next();
-			}
-			else if (lexer.Current is Tokens.LeftParenthesis)
-				result = TypeTuple.ParseTypeTuple(lexer);
-			else
-				new Exception.SyntaxError("type expression", lexer).Throw();
-			return result;
+			return base.Write(indenter) &&
+			indenter.Write(" = ") &&
+			this.Expression.Write(indenter);
 		}
-		#endregion
 	}
 }
 
