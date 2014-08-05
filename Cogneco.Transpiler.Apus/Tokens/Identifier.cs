@@ -122,18 +122,18 @@ namespace Cogneco.Transpiler.Apus.Tokens
 				case "is":
 					result = new Keyword(Keywords.Is, data, region);
 					break;
-				case "new":
-					result = new Keyword(Keywords.New, data, region);
-					break;
-				case "base":
-					result = new Keyword(Keywords.Super, data, region);
-					break;
-				case "this":
-					result = new Keyword(Keywords.This, data, region);
-					break;
-				case "This":
-					result = new Keyword(Keywords.StaticThis, data, region);
-					break;
+//				case "new":
+//					result = new Keyword(Keywords.New, data, region);
+//					break;
+//				case "base":
+//					result = new Keyword(Keywords.Super, data, region);
+//					break;
+//				case "this":
+//					result = new Keyword(Keywords.This, data, region);
+//					break;
+//				case "This":
+//					result = new Keyword(Keywords.StaticThis, data, region);
+//					break;
 				case "type":
 					result = new Keyword(Keywords.Type, data, region);
 					break;

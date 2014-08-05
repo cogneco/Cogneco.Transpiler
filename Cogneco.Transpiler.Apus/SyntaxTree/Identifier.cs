@@ -21,6 +21,7 @@
 
 using System;
 using Text = Kean.IO.Text;
+using Kean.Extension;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
@@ -37,7 +38,7 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		}
 		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return indenter.Write(this.Name);
+			return (this.Parent.IsNull() || this.Parent.Write(indenter) && indenter.Write(".")) && indenter.Write(this.Name);
 		}
 		#region Static Parse
 		internal static Identifier ParseIdentifier(Tokens.Lexer lexer)
@@ -48,7 +49,12 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			if (lexer.Current is Tokens.LeftParenthesis)
 				;// function call do ParseTupleExpression
 			else if (lexer.Current is Tokens.InfixOperator && (lexer.Current as Tokens.InfixOperator).Symbol == ".")
-				;// parent resolve this with recursivecall
+			{
+				if (!(lexer.Next() is Tokens.Identifier))
+					new Exception.SyntaxError("identfifier following dot operator \".\"", lexer).Throw();
+				result = Identifier.ParseIdentifier(lexer);
+				result.Parent = new Identifier(current.Name) { Region = current.Region };
+			}
 			else
 				result = new Identifier(current.Name) { Region = current.Region };
 			return result;
