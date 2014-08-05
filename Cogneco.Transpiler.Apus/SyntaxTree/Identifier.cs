@@ -28,7 +28,6 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 	public class Identifier : Expression
 	{
 		public override int Precedence { get { return 500; } }
-		public Identifier Parent { get; set; }
 		public Declaration Declaration { get; set; }
 		readonly string name;
 		public string Name { get { return this.name; } }
@@ -38,25 +37,13 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		}
 		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return (this.Parent.IsNull() || this.Parent.Write(indenter) && indenter.Write(".")) && indenter.Write(this.Name);
+			return indenter.Write(this.Name);
 		}
 		#region Static Parse
 		internal static Identifier ParseIdentifier(Tokens.Lexer lexer)
 		{
-			Tokens.Identifier current = lexer.Current as Tokens.Identifier;
+			var result = new Identifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
 			lexer.Next();
-			Identifier result = null;
-			if (lexer.Current is Tokens.LeftParenthesis)
-				;// function call do ParseTupleExpression
-			else if (lexer.Current is Tokens.InfixOperator && (lexer.Current as Tokens.InfixOperator).Symbol == ".")
-			{
-				if (!(lexer.Next() is Tokens.Identifier))
-					new Exception.SyntaxError("identfifier following dot operator \".\"", lexer).Throw();
-				result = Identifier.ParseIdentifier(lexer);
-				result.Parent = new Identifier(current.Name) { Region = current.Region };
-			}
-			else
-				result = new Identifier(current.Name) { Region = current.Region };
 			return result;
 		}
 		#endregion
