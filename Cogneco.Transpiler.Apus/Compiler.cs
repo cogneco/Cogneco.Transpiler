@@ -34,10 +34,10 @@ namespace Cogneco.Transpiler.Apus
 		public Compiler()
 		{
 		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> modules)
+		public void Compile(Generic.IEnumerable<Uri.Locator> files)
 		{
-			foreach (var module in modules)
-				foreach (var statement in parser.Parse(module))
+			foreach (var file in files)
+				foreach (var statement in parser.Parse(file))
 					Console.Write(statement);
 		}
 	}

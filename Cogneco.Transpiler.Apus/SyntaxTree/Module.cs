@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Module.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -25,18 +25,28 @@ using Generic = System.Collections.Generic;
 using Uri = Kean.Uri;
 using IO = Kean.IO;
 using Collection = Kean.Collection;
+using Kean.Collection.Extension;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class Parser : FrontEnd.Parser<Module>
+	public class Module : Collection.List<Statement>
 	{
-		public Parser()
+		public Scope Scope { get; private set; }
+		Module()
 		{
 		}
-		public override Module Parse(IO.ICharacterReader reader)
+		#region Static Parse
+		public static Module Parse(Tokens.Lexer lexer)
 		{
-			return Module.Parse(Tokens.Lexer.Open(reader));
+			var result = new Module();
+			foreach (Statement statement in Statement.ParseStatements(lexer))
+			{
+				//statement.Resolve(this.Scope);
+				result.Add(statement);
+			}
+			return result;
 		}
+		#endregion
 	}
 }
 

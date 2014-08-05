@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Scope.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -18,24 +18,14 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
-using Collection = Kean.Collection;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public class Parser : FrontEnd.Parser<Module>
+	public class Scope
 	{
-		public Parser()
+		public Scope()
 		{
-		}
-		public override Module Parse(IO.ICharacterReader reader)
-		{
-			return Module.Parse(Tokens.Lexer.Open(reader));
 		}
 	}
 }
