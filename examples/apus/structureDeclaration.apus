@@ -9,4 +9,7 @@ struct Point {
 	func distanceCityBlock() -> Float {
 		this.x + this.y
 	}
+	func distance() -> Float {
+		(this.x.Squared() + this.y.Squared()).SquareRoot()
+	}
 }
