@@ -40,6 +40,24 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 			this.Items.All(item => item.Write(indenter) && indenter.Write(", ")) &&
 			indenter.Write(")");
 		}
+		#region Static ParseTupleExpression
+		public static TupleExpression ParseTupleExpression(Tokens.Lexer lexer)
+		{
+			if (!(lexer.Current is Tokens.LeftParenthesis))
+				new Exception.SyntaxError("left parenthesis \"(\"", lexer).Throw();
+			TupleExpression result = new TupleExpression { Region = lexer.Current.Region };
+			if (!(lexer.Next() is Tokens.RightParenthesis))
+			{
+				do
+					result.Items.Add(Expression.ParseExpression(lexer));
+				while (lexer.Current is Tokens.Comma && lexer.Next().NotNull());
+				if (!(lexer.Current is Tokens.RightParenthesis))
+					new Exception.SyntaxError("right parenthesis \")\"", lexer).Throw();
+			}
+			lexer.Next();
+			return result;
+		}
+		#endregion
 	}
 }
 

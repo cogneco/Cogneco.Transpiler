@@ -90,6 +90,12 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 					result = o;
 				}
 			}
+			else if (lexer.Current is Tokens.LeftParenthesis) // Function call
+				result = new FunctionCall() {
+					Function = before,
+					Arguments = TupleExpression.ParseTupleExpression(lexer),
+					Region = lexer.Current.Region
+				};
 			return result.IsNull() ? before : Expression.ParseExpressionEnd(lexer, precedence, result);
 		}
 		static Expression ParseExpressionEnd(Tokens.Lexer lexer, int precedence, Expression before)
