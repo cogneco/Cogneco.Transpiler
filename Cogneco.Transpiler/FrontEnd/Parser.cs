@@ -32,13 +32,12 @@ namespace Cogneco.Transpiler.FrontEnd
 		protected Parser()
 		{
 		}
-		public Generic.IEnumerable<TResult> Parse(Uri.Locator resource)
+		public TResult Parse(Uri.Locator resource)
 		{
 			using (var reader = IO.CharacterReader.Open(resource))
-				foreach (var result in this.Parse(reader))
-					yield return result;
+				return this.Parse(reader);
 		}
-		public abstract Generic.IEnumerable<TResult> Parse(IO.ICharacterReader reader);
+		public abstract TResult Parse(IO.ICharacterReader reader);
 	}
 }
 

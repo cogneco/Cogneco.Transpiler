@@ -1,5 +1,5 @@
 ﻿//
-//  Parser.cs
+//  Compiler.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,22 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Uri = Kean.Uri;
+using Argument = Kean.Cli.Argument;
+using IO = Kean.IO;
 using Kean.Extension;
 using Generic = System.Collections.Generic;
-using Uri = Kean.Uri;
-using IO = Kean.IO;
-using Collection = Kean.Collection;
 
-namespace Cogneco.Transpiler.Apus.SyntaxTree
+namespace Cogneco.Transpiler.Apus
 {
-	public class Parser : FrontEnd.Parser<Module>
+	public class Compiler
 	{
-		public Parser()
+		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
+		public Compiler()
 		{
 		}
-		public override Module Parse(IO.ICharacterReader reader)
+		public void Compile(Generic.IEnumerable<Uri.Locator> files)
 		{
-			return Module.Parse(Tokens.Lexer.Open(reader));
+			foreach (var file in files)
+				foreach (var statement in parser.Parse(file))
+					Console.Write(statement);
 		}
 	}
 }

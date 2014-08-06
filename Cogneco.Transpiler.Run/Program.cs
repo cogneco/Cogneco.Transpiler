@@ -3,6 +3,7 @@ using Uri = Kean.Uri;
 using Argument = Kean.Cli.Argument;
 using IO = Kean.IO;
 using Kean.Extension;
+using Collection = Kean.Collection;
 
 namespace Cogneco.Transpiler.Run
 {
@@ -10,13 +11,12 @@ namespace Cogneco.Transpiler.Run
 	{
 		public static void Main(string[] arguments)
 		{
-			Uri.Locator program = null;
+			var compiler = new Apus.Compiler();
+			var modules = new Collection.List<Uri.Locator>();
 			var argumentParser = new Argument.Parser();
-			argumentParser.UnassociatedParameterHandler = argument => program = argument;
+			argumentParser.UnassociatedParameterHandler = argument => modules.Add(argument);
 			argumentParser.Parse(arguments);
-			var parser = new Apus.SyntaxTree.Parser();
-			foreach (var statement in parser.Parse(program))
-				Console.Write(statement);
+			compiler.Compile(modules);
 		}
 	}
 }

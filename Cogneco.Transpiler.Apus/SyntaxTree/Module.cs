@@ -31,7 +31,8 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
 	public class Module : Collection.List<Statement>
 	{
-		Uri.Locator File { get; set; }
+		public Scope Scope { get; private set; }
+		public Uri.Locator File { get; set; }
 
 		public Module(Generic.IEnumerable<Statement> statements) : base()
 		{
@@ -43,6 +44,18 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 		public Module()
 		{
 		}
+		#region Static Parse
+		public static Module Parse(Tokens.Lexer lexer)
+		{
+			var result = new Module();
+			foreach (Statement statement in Statement.ParseStatements(lexer))
+			{
+				//statement.Resolve(this.Scope);
+				result.Add(statement);
+			}
+			return result;
+		}
+		#endregion
 	}
 }
 
