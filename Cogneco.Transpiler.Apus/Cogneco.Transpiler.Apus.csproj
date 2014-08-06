@@ -89,6 +89,8 @@
     <Compile Include="SyntaxTree\InfixOperator.cs" />
     <Compile Include="Tokens\InfixOperator.cs" />
     <Compile Include="SyntaxTree\FunctionCall.cs" />
+    <Compile Include="SyntaxTree\Module.cs" />
+    <Compile Include="SyntaxTree\Scope.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

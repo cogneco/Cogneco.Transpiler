@@ -19,6 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using Kean;
 using Kean.Extension;
 using Generic = System.Collections.Generic;
 using Uri = Kean.Uri;
@@ -31,8 +33,34 @@ namespace Cogneco.Transpiler.Apus.SyntaxTree
 	public abstract class Expression : Statement
 	{
 		public abstract int Precedence { get; }
-		public Type AssignedType { get; set; }
-		public Type InferredType { get; set; }
+		#region AssignedType
+		[Notify("AssignedTypeChanged")]
+		Type assignedType;
+		public Type AssignedType
+		{ 
+			get { return this.assignedType; }
+			set
+			{
+				if (this.assignedType != value)
+					this.AssignedTypeChanged.Call(this.Type = this.assignedType = value);
+			}
+		}
+		public event Action<Type> AssignedTypeChanged;
+		#endregion
+		#region Type
+		[Notify("TypeChanged")]
+		Type type;
+		public Type Type
+		{ 
+			get { return this.assignedType ?? this.type; }
+			set
+			{
+				if (this.type != value)
+					this.TypeChanged.Call(this.type = value);
+			}
+		}
+		public event Action<Type> TypeChanged;
+		#endregion
 		protected Expression()
 		{
 		}
