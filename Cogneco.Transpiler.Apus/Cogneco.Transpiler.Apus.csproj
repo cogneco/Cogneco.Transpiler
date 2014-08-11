@@ -92,6 +92,7 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="SyntaxTree\Module.cs" />
     <Compile Include="SyntaxTree\Scope.cs" />
+    <Compile Include="SyntaxTree\Sope.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

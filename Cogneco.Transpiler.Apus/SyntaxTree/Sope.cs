@@ -1,5 +1,5 @@
 ﻿//
-//  Node.cs
+//  Sope.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,29 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Kean;
+using Kean.Extension;
+using Collection = Kean.Collection;
 using Uri = Kean.Uri;
 using Text = Kean.IO.Text;
 using Generic = System.Collections.Generic;
 
 namespace Cogneco.Transpiler.Apus.SyntaxTree
 {
-	public abstract class Node
+	public class Sope
 	{
-		public Uri.Region Region { get; set; }
-		protected Node()
+		readonly Collection.IDictionary<string, Collection.IList<IdentifierPattern>> map = new Collection.Dictionary<string, Collection.IList<IdentifierPattern>>();
+		readonly Scope parent;
+		public Sope(Scope parent)
+		{
+			this.parent = parent;
+		}
+		public Sope() : this(null)
 		{
 		}
-		public override string ToString()
+		public void Register(string name, IdentifierPattern declaration)
 		{
-			var result = new Text.Writer();
-			this.Write(Text.Indenter.Open(result));
-			return result;
+			this.map[name] = (this.map[name] ?? new Collection.List<IdentifierPattern>()).Add(declaration);
 		}
-		internal abstract bool Write(Text.Indenter indenter);
-		internal virtual bool WriteLine(Text.Indenter indenter)
-		{
-			return this.Write(indenter) && indenter.WriteLine();
-		}
+
 	}
 }
 
