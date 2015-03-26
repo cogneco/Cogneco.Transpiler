@@ -1,5 +1,5 @@
 ﻿//
-//  Compiler.cs
+//  Scope.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,25 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Argument = Kean.Cli.Argument;
-using IO = Kean.IO;
+using Kean;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
+using Collection = Kean.Collection;
+using Kean.Collection.Extension;
 
-namespace Cogneco.Transpiler.Apus
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public class Compiler
+	public class Scope
 	{
-		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
-		public Compiler()
+		public Scope Parent { get; set; }
+		//		public Declaration this [params string[] name]
+		//		{
+		//			get;
+		//			set;
+		//		}
+		public Scope()
 		{
-		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> files)
-		{
-			foreach (var file in files)
-				foreach (var statement in parser.Parse(file))
-					Console.Write(statement);
 		}
 	}
 }

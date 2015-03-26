@@ -20,8 +20,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
     <Commandlineparameters>file://../../examples/apus/structureDeclaration.apus</Commandlineparameters>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -52,6 +52,10 @@
     <ProjectReference Include="..\Cogneco.Transpiler.Apus\Cogneco.Transpiler.Apus.csproj">
       <Project>{907216FA-9143-497B-9F7E-2566844F232E}</Project>
       <Name>Cogneco.Transpiler.Apus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cogneco.Transpiler.Ooc\Cogneco.Transpiler.Ooc.csproj">
+      <Project>{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}</Project>
+      <Name>Cogneco.Transpiler.Ooc</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

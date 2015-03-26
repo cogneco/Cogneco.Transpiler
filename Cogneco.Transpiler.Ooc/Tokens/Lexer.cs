@@ -1,10 +1,10 @@
 ﻿//
-//  Sope.cs
+//  Lexer.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
 //
-//  Copyright (c) 2014 Simon Mika
+//  Copyright (c) 2015 Simon Mika
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,29 +22,32 @@
 using System;
 using Kean;
 using Kean.Extension;
-using Collection = Kean.Collection;
-using Uri = Kean.Uri;
-using Text = Kean.IO.Text;
-using Generic = System.Collections.Generic;
+using IO = Kean.IO;
 
-namespace Cogneco.Transpiler.Apus.SyntaxTree
+namespace Cogneco.Transpiler.Ooc.Tokens
 {
-	public class Sope
+	public class Lexer : FrontEnd.Lexer<Token>
 	{
-		readonly Collection.IDictionary<string, Collection.IList<IdentifierPattern>> map = new Collection.Dictionary<string, Collection.IList<IdentifierPattern>>();
-		readonly Scope parent;
-		public Sope(Scope parent)
+		public override Token Next()
 		{
-			this.parent = parent;
+			Token result = base.Next();
+			if (result is WhiteSpace || result is Comment)
+				result = this.Next();
+			return result;
 		}
-		public Sope() : this(null)
+		Lexer(Tokenizer tokenizer) : base(tokenizer)
 		{
 		}
-		public void Register(string name, IdentifierPattern declaration)
+		#region Static Open
+		public static Lexer Open(IO.ICharacterReader reader)
 		{
-			this.map[name] = (this.map[name] ?? new Collection.List<IdentifierPattern>()).Add(declaration);
+			return Lexer.Open(Tokenizer.Open(reader));
 		}
-
+		static Lexer Open(Tokenizer tokenizer)
+		{
+			return tokenizer.NotNull() ? new Lexer(tokenizer) : null;
+		}
+		#endregion
 	}
 }
 

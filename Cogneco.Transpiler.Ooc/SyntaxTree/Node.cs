@@ -1,5 +1,5 @@
 ﻿//
-//  Compiler.cs
+//  Node.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,24 +21,27 @@
 
 using System;
 using Uri = Kean.Uri;
-using Argument = Kean.Cli.Argument;
-using IO = Kean.IO;
-using Kean.Extension;
+using Text = Kean.IO.Text;
 using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public class Compiler
+	public abstract class Node
 	{
-		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
-		public Compiler()
+		public Uri.Region Region { get; set; }
+		protected Node()
 		{
 		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> files)
+		public override string ToString()
 		{
-			foreach (var file in files)
-				foreach (var statement in parser.Parse(file))
-					Console.Write(statement);
+			var result = new Text.Writer();
+			this.Write(Text.Indenter.Open(result));
+			return result;
+		}
+		internal abstract bool Write(Text.Indenter indenter);
+		internal virtual bool WriteLine(Text.Indenter indenter)
+		{
+			return this.Write(indenter) && indenter.WriteLine();
 		}
 	}
 }

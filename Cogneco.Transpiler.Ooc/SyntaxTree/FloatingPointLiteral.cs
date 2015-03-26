@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  FloatingPointLiteral.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,23 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
+using Kean.Extension;
+using Text = Kean.IO.Text;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public abstract class Token
+	public class FloatingPointLiteral : Literal
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		public double Value { get; set; }
+		public FloatingPointLiteral(Tokens.FloatingPointLiteral token) : base(token)
 		{
-			this.Raw = raw;
-			this.Region = region;
+			this.Value = token.Value;
 		}
-		public override string ToString()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return this.Raw;
+			return indenter.Write(this.Value);
 		}
 	}
 }

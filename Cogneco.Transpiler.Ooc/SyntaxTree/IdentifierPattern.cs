@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  IdentifierPattern.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,23 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
+using System.Security;
+using Text = Kean.IO.Text;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public abstract class Token
+	public class IdentifierPattern : Pattern
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		public string Name { get; set; }
+		public IdentifierPattern(Tokens.Identifier identifier)
 		{
-			this.Raw = raw;
-			this.Region = region;
+			this.Name = identifier.Name;
+			this.Region = identifier.Region;
 		}
-		public override string ToString()
+		internal override bool Write(Text.Indenter indenter)
 		{
-			return this.Raw;
+			return indenter.Write(this.Name) && this.WriteType(indenter);
 		}
 	}
 }

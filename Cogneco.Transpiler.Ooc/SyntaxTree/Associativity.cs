@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  Associativity.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,24 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public abstract class Token
+	public enum Associativity
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
-		{
-			this.Raw = raw;
-			this.Region = region;
-		}
-		public override string ToString()
-		{
-			return this.Raw;
-		}
+		None,
+		Left,
+		Right,
 	}
 }
 

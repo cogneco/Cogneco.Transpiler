@@ -1,10 +1,10 @@
 ﻿//
-//  Compiler.cs
+//  SyntaxError.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
 //
-//  Copyright (c) 2014 Simon Mika
+//  Copyright (c) 2015 Simon Mika
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,25 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Argument = Kean.Cli.Argument;
-using IO = Kean.IO;
 using Kean.Extension;
-using Generic = System.Collections.Generic;
+using Error = Kean.Error;
+using Uri = Kean.Uri;
 
-namespace Cogneco.Transpiler.Apus
+namespace Cogneco.Transpiler.Ooc.Exception
 {
-	public class Compiler
+	public class SyntaxError : Transpiler.Exception.SyntaxError
 	{
-		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
-		public Compiler()
+		internal SyntaxError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
 		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> files)
+		internal SyntaxError(string expected, Tokens.Lexer lexer)
+			: this(null, expected, lexer.Current.NotNull() ? "\"" + lexer.Current.Raw + "\"" : "nothing", lexer.Current.NotNull() ? lexer.Current.Region : lexer.Last.Region)
 		{
-			foreach (var file in files)
-				foreach (var statement in parser.Parse(file))
-					Console.Write(statement);
+		}
+		internal SyntaxError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, expected, found, region)
+		{
 		}
 	}
 }

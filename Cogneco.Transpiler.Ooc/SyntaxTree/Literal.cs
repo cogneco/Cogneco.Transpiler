@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  Literal.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,24 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public abstract class Token
+	public abstract class Literal : Expression
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		public override int Precedence { get { return 500; } }
+		public string Raw { get; set; }
+		protected Literal(Tokens.Literal token)
 		{
-			this.Raw = raw;
-			this.Region = region;
+			this.Raw = token.Raw;
+			this.Region = token.Region;
 		}
-		public override string ToString()
+		#region Static Create
+		public static Literal Create(Tokens.Literal token)
 		{
-			return this.Raw;
+			return 
+				token is Tokens.IntegerLiteral ? (Literal)new IntegerLiteral(token as Tokens.IntegerLiteral) :
+				token is Tokens.FloatingPointLiteral ? (Literal)new FloatingPointLiteral(token as Tokens.FloatingPointLiteral) :
+				null;
 		}
+		#endregion
 	}
 }
 

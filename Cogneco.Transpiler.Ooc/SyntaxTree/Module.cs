@@ -1,5 +1,5 @@
 ﻿//
-//  Compiler.cs
+//  Module.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,26 +20,42 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Argument = Kean.Cli.Argument;
-using IO = Kean.IO;
 using Kean.Extension;
 using Generic = System.Collections.Generic;
+using Uri = Kean.Uri;
+using IO = Kean.IO;
+using Collection = Kean.Collection;
+using Kean.Collection.Extension;
 
-namespace Cogneco.Transpiler.Apus
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public class Compiler
+	public class Module : Collection.List<Statement>
 	{
-		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
-		public Compiler()
+		public Scope Scope { get; private set; }
+		public Uri.Locator File { get; set; }
+
+		public Module(Generic.IEnumerable<Statement> statements) : base()
+		{
+			this.Add(statements);
+		}
+		public Module(params Statement[] statements) : base(statements)
 		{
 		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> files)
+		public Module()
 		{
-			foreach (var file in files)
-				foreach (var statement in parser.Parse(file))
-					Console.Write(statement);
 		}
+		#region Static Parse
+		public static Module Parse(Tokens.Lexer lexer)
+		{
+			var result = new Module();
+			foreach (Statement statement in Statement.ParseStatements(lexer))
+			{
+				//statement.Resolve(this.Scope);
+				result.Add(statement);
+			}
+			return result;
+		}
+		#endregion
 	}
 }
 

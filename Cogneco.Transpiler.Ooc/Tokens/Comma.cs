@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  Comma.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -21,22 +21,13 @@
 
 using System;
 using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.Tokens
 {
-	public abstract class Token
+	public class Comma : Separator
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		public Comma(Uri.Region region) : base(",", region)
 		{
-			this.Raw = raw;
-			this.Region = region;
-		}
-		public override string ToString()
-		{
-			return this.Raw;
 		}
 	}
 }

@@ -1,10 +1,10 @@
 ﻿//
-//  Token.cs
+//  LexicalError.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
 //
-//  Copyright (c) 2014 Simon Mika
+//  Copyright (c) 2015 Simon Mika
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,23 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Error = Kean.Error;
 using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.Exception
 {
-	public abstract class Token
+	public class LexicalError : Transpiler.Exception.LexicalError
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		protected internal LexicalError(string expected, string found, Uri.Region region) : this(null, expected, found, region)
 		{
-			this.Raw = raw;
-			this.Region = region;
 		}
-		public override string ToString()
+		protected internal LexicalError(System.Exception innerException, string expected, string found, Uri.Region region) : base(innerException, expected, found, region)
 		{
-			return this.Raw;
 		}
 	}
 }

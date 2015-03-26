@@ -3,17 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{907216FA-9143-497B-9F7E-2566844F232E}</ProjectGuid>
+    <ProjectGuid>{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Cogneco.Transpiler.Apus</RootNamespace>
-    <AssemblyName>Cogneco.Transpiler.Apus</AssemblyName>
+    <RootNamespace>Cogneco.Transpiler.Ooc</RootNamespace>
+    <AssemblyName>Cogneco.Transpiler.Ooc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug</OutputPath>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -22,7 +22,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -32,38 +32,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SyntaxTree\Associativity.cs" />
-    <Compile Include="SyntaxTree\Declaration.cs" />
-    <Compile Include="SyntaxTree\Expression.cs" />
-    <Compile Include="SyntaxTree\FloatingPointLiteral.cs" />
-    <Compile Include="SyntaxTree\FunctionDeclaration.cs" />
-    <Compile Include="SyntaxTree\Identifier.cs" />
-    <Compile Include="SyntaxTree\IdentifierPattern.cs" />
-    <Compile Include="SyntaxTree\IntegerLiteral.cs" />
-    <Compile Include="SyntaxTree\Literal.cs" />
-    <Compile Include="SyntaxTree\Node.cs" />
-    <Compile Include="SyntaxTree\Operator.cs" />
+    <Compile Include="Compiler.cs" />
+    <Compile Include="Exception\LexicalError.cs" />
+    <Compile Include="Exception\SyntaxError.cs" />
+    <Compile Include="Tokens\Token.cs" />
     <Compile Include="SyntaxTree\Parser.cs" />
-    <Compile Include="SyntaxTree\Pattern.cs" />
+    <Compile Include="Tokens\Lexer.cs" />
+    <Compile Include="Tokens\Tokenizer.cs" />
+    <Compile Include="SyntaxTree\Module.cs" />
+    <Compile Include="SyntaxTree\Scope.cs" />
     <Compile Include="SyntaxTree\Statement.cs" />
-    <Compile Include="SyntaxTree\TupleExpression.cs" />
-    <Compile Include="SyntaxTree\TuplePattern.cs" />
-    <Compile Include="SyntaxTree\Type.cs" />
-    <Compile Include="SyntaxTree\TypeIdentifier.cs" />
-    <Compile Include="SyntaxTree\VariableDeclaration.cs" />
-    <Compile Include="SyntaxTree\WildcardPattern.cs" />
+    <Compile Include="SyntaxTree\Node.cs" />
     <Compile Include="Tokens\BooleanLiteral.cs" />
     <Compile Include="Tokens\Comma.cs" />
     <Compile Include="Tokens\Comment.cs" />
     <Compile Include="Tokens\FloatingPointLiteral.cs" />
     <Compile Include="Tokens\Identifier.cs" />
+    <Compile Include="Tokens\InfixOperator.cs" />
     <Compile Include="Tokens\IntegerLiteral.cs" />
     <Compile Include="Tokens\Keyword.cs" />
     <Compile Include="Tokens\Keywords.cs" />
     <Compile Include="Tokens\LeftBrace.cs" />
     <Compile Include="Tokens\LeftBracket.cs" />
     <Compile Include="Tokens\LeftParenthesis.cs" />
-    <Compile Include="Tokens\Lexer.cs" />
     <Compile Include="Tokens\Literal.cs" />
     <Compile Include="Tokens\NullLiteral.cs" />
     <Compile Include="Tokens\Operator.cs" />
@@ -75,23 +66,32 @@
     <Compile Include="Tokens\Semicolon.cs" />
     <Compile Include="Tokens\Separator.cs" />
     <Compile Include="Tokens\StringLiteral.cs" />
-    <Compile Include="Tokens\Token.cs" />
-    <Compile Include="Tokens\Tokenizer.cs" />
     <Compile Include="Tokens\WhiteSpace.cs" />
-    <Compile Include="Exception\LexicalError.cs" />
-    <Compile Include="Exception\SyntaxError.cs" />
-    <Compile Include="SyntaxTree\StructureDeclaration.cs" />
+    <Compile Include="SyntaxTree\Associativity.cs" />
     <Compile Include="SyntaxTree\ClassDeclaration.cs" />
-    <Compile Include="SyntaxTree\VariableDefinition.cs" />
-    <Compile Include="SyntaxTree\TypeTuple.cs" />
-    <Compile Include="SyntaxTree\PrefixOperator.cs" />
-    <Compile Include="SyntaxTree\PostfixOperator.cs" />
-    <Compile Include="SyntaxTree\InfixOperator.cs" />
-    <Compile Include="Tokens\InfixOperator.cs" />
+    <Compile Include="SyntaxTree\Declaration.cs" />
+    <Compile Include="SyntaxTree\Expression.cs" />
+    <Compile Include="SyntaxTree\FloatingPointLiteral.cs" />
     <Compile Include="SyntaxTree\FunctionCall.cs" />
-    <Compile Include="Compiler.cs" />
-    <Compile Include="SyntaxTree\Module.cs" />
-    <Compile Include="SyntaxTree\Scope.cs" />
+    <Compile Include="SyntaxTree\FunctionDeclaration.cs" />
+    <Compile Include="SyntaxTree\Identifier.cs" />
+    <Compile Include="SyntaxTree\IdentifierPattern.cs" />
+    <Compile Include="SyntaxTree\InfixOperator.cs" />
+    <Compile Include="SyntaxTree\IntegerLiteral.cs" />
+    <Compile Include="SyntaxTree\Literal.cs" />
+    <Compile Include="SyntaxTree\Operator.cs" />
+    <Compile Include="SyntaxTree\Pattern.cs" />
+    <Compile Include="SyntaxTree\PostfixOperator.cs" />
+    <Compile Include="SyntaxTree\PrefixOperator.cs" />
+    <Compile Include="SyntaxTree\StructureDeclaration.cs" />
+    <Compile Include="SyntaxTree\TupleExpression.cs" />
+    <Compile Include="SyntaxTree\TuplePattern.cs" />
+    <Compile Include="SyntaxTree\Type.cs" />
+    <Compile Include="SyntaxTree\TypeIdentifier.cs" />
+    <Compile Include="SyntaxTree\TypeTuple.cs" />
+    <Compile Include="SyntaxTree\VariableDeclaration.cs" />
+    <Compile Include="SyntaxTree\VariableDefinition.cs" />
+    <Compile Include="SyntaxTree\WildcardPattern.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -103,5 +103,10 @@
       <Project>{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}</Project>
       <Name>Kean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exception\" />
+    <Folder Include="Tokens\" />
+    <Folder Include="SyntaxTree\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 ﻿//
-//  Token.cs
+//  Identifier.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
@@ -20,24 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Uri = Kean.Uri;
-using Generic = System.Collections.Generic;
+using Text = Kean.IO.Text;
+using Kean.Extension;
 
-namespace Cogneco.Transpiler.Apus.Tokens
+namespace Cogneco.Transpiler.Ooc.SyntaxTree
 {
-	public abstract class Token
+	public class Identifier : Expression
 	{
-		public readonly string Raw;
-		public readonly Uri.Region Region;
-		protected Token(string raw, Uri.Region region)
+		public override int Precedence { get { return 500; } }
+		public Declaration Declaration { get; set; }
+		readonly string name;
+		public string Name { get { return this.name; } }
+		public Identifier(string name)
 		{
-			this.Raw = raw;
-			this.Region = region;
+			this.name = name;
 		}
-		public override string ToString()
+		protected override bool WriteHelper(Text.Indenter indenter)
 		{
-			return this.Raw;
+			return indenter.Write(this.Name);
 		}
+		#region Static Parse
+		internal static Identifier ParseIdentifier(Tokens.Lexer lexer)
+		{
+			var result = new Identifier((lexer.Current as Tokens.Identifier).Name) { Region = lexer.Current.Region };
+			lexer.Next();
+			return result;
+		}
+		#endregion
 	}
 }
 

@@ -1,10 +1,10 @@
 ﻿//
-//  Compiler.cs
+//  Token.cs
 //
 //  Author:
 //       Simon Mika <simon@mika.se>
 //
-//  Copyright (c) 2014 Simon Mika
+//  Copyright (c) 2015 Simon Mika
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -21,24 +21,21 @@
 
 using System;
 using Uri = Kean.Uri;
-using Argument = Kean.Cli.Argument;
-using IO = Kean.IO;
-using Kean.Extension;
-using Generic = System.Collections.Generic;
 
-namespace Cogneco.Transpiler.Apus
+namespace Cogneco.Transpiler.Ooc.Tokens
 {
-	public class Compiler
+	public abstract class Token
 	{
-		readonly SyntaxTree.Parser parser = new Apus.SyntaxTree.Parser();
-		public Compiler()
+		public readonly string Raw;
+		public readonly Uri.Region Region;
+		protected Token(string raw, Uri.Region region)
 		{
+			this.Raw = raw;
+			this.Region = region;
 		}
-		public void Compile(Generic.IEnumerable<Uri.Locator> files)
+		public override string ToString()
 		{
-			foreach (var file in files)
-				foreach (var statement in parser.Parse(file))
-					Console.Write(statement);
+			return this.Raw;
 		}
 	}
 }

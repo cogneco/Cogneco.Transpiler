@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kean.Tests", "Kean\Kean.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogneco.Transpiler.Apus", "Cogneco.Transpiler.Apus\Cogneco.Transpiler.Apus.csproj", "{907216FA-9143-497B-9F7E-2566844F232E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogneco.Transpiler.Ooc", "Cogneco.Transpiler.Ooc\Cogneco.Transpiler.Ooc.csproj", "{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -33,6 +35,10 @@ Global
 		{907216FA-9143-497B-9F7E-2566844F232E}.Debug|x86.Build.0 = Debug|Any CPU
 		{907216FA-9143-497B-9F7E-2566844F232E}.Release|x86.ActiveCfg = Release|Any CPU
 		{907216FA-9143-497B-9F7E-2566844F232E}.Release|x86.Build.0 = Release|Any CPU
+		{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}.Debug|x86.Build.0 = Debug|Any CPU
+		{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4C94E16-84BA-49AB-A944-21E8EA7D3E9C}.Release|x86.Build.0 = Release|Any CPU
 		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Debug|x86.Build.0 = Debug|Any CPU
 		{DB8ACBAC-64DF-439B-BFCD-564D51661CE2}.Release|x86.ActiveCfg = Release|Any CPU

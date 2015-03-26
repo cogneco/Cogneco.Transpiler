@@ -11,7 +11,7 @@ namespace Cogneco.Transpiler.Run
 	{
 		public static void Main(string[] arguments)
 		{
-			var compiler = new Apus.Compiler();
+			var compiler = new Ooc.Compiler();
 			var modules = new Collection.List<Uri.Locator>();
 			var argumentParser = new Argument.Parser();
 			argumentParser.UnassociatedParameterHandler = argument => modules.Add(argument);
